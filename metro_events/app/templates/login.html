@@ -5,22 +5,34 @@
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Dashboard</title>
+
+    {% load static %}
+    <link rel="stylesheet" href="{% static 'bootstrap/css/bootstrap.min.css' %}">
+    <link rel="stylesheet" href="{% static 'bootstrap/css/bootstrap.css' %}">
+
+    <style>
+        html, body {
+            height: 100%;
+        }
+    </style>
 </head>
 <body>
     <h1>This is the login page.</h1>
 
-    <form action="{% url 'app:login' %}" method="post">
-        {% csrf_token %}
-
-        <label for="email">Username:</label><br>
-        <input type="text" id="username" name="username"><br>
-
-        <label for="password">Password:</label><br>
-        <input type="text" id="password" name="password"><br>
-
-        <input type="submit" value="login">
-        <p>Wylen</p>
-        
-    </form>
+    <div class="container text-center d-flex align-items-center justify-content-center">
+        <form action="{% url 'app:login' %}" method="post">
+            {% csrf_token %}
+    
+            <label for="email">Username:</label><br>
+            <input type="text" id="username" name="username"><br>
+    
+            <label for="password">Password:</label><br>
+            <input type="text" id="password" name="password"><br>
+    
+            <input type="submit" value="login">
+            
+        </form>
+    </div>
+    
 </body>
 </html>
