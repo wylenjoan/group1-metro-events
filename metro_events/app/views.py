@@ -63,6 +63,13 @@ class UserRegistrationView(View):
 
 class UserDashboardView(View):
     def get(self, request):
-        return render(request, 'user/user-dashboard.html')
+        return render(request, 'user.html')
 
     
+class OrganizerDashboardView(View):
+    def get(self, request):
+        return render(request, 'organizer.html')
+
+class AdminDashboardView(View):
+    def get(self, request):
+        return render(request, 'administrator.html')

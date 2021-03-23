@@ -1,4 +1,4 @@
-{% extends "base_1.1.html" %}
+<!-- {% extends "base_1.1.html" %} -->
 {% load static %}
 <!DOCTYPE html>
 <html lang="en">
@@ -10,7 +10,6 @@
 </head>
 {% block content %}
 <body>
-    <h1>This is the dashboard page.</h1>
     <div class="container">
     <!-- Buttons-->
     <h1>User Dashboard</h1>
@@ -41,7 +40,6 @@
                                   </tr>
                                 </thead>
                                 <tbody>
-                                {% for event in event %}
                                   <tr>
                                     <td>{{event.title}}</td>
                                     <td>{{event.description}}</td>
@@ -56,7 +54,6 @@
                                       <button type="submit" class="btn btn-success"> <i class="fa fa-check"></i> Join</button>
                                     </td>
                                   </tr>
-                                {% endfor %}
                                 </tbody>
                             </table>
                         </div>
@@ -69,7 +66,7 @@
                     <div class="card-header"><i class="fa fa-user mr-1"></i> Profile</div>
                     <div class="card-body" >
                         <div class="table-responsive" >
-                            {% for user in user %}
+                            =
                             <form class="form" action="##" method="POST" id="userProfileForm">
                                   <div class="form-group"> 
                                       <div class="col-xs-6">
@@ -116,7 +113,7 @@
                                         </div>
                                   </div>
                             </form>
-                            {% endfor %}
+                            =
                         </div>
                     </div>
             </div>

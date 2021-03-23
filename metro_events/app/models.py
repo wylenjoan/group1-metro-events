@@ -40,7 +40,7 @@ class Event(models.Model):
     event_type  = models.CharField(max_length = 128, default = "", blank = True, null = True)
     start_datetime = models.DateTimeField(default = timezone.now)
     end_datetime = models.DateTimeField(default = timezone.now)
-    status = models.CharField(max_length = 128, default = "", blank = True, null = True)
+    is_approved = models.BooleanField(default=False)
     upvotes_count = models.IntegerField(default = 0)
     street = models.CharField(max_length = 128, default = "", blank = True, null = True)
     city = models.CharField(max_length = 128, default = "", blank = True, null = True)

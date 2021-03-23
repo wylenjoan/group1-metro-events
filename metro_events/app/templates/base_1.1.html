@@ -6,11 +6,8 @@
     <meta charset="utf-8">
     <meta content="width=device-width, initial-scale=1.0" name="viewport">
 
-    {% if title %}
-    <title>Metro Events - {{ title }}</title>
-    {% else %}
     <title>Metro Events</title>
-    {% endif %}
+
     <!-- Meta tags -->
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
@@ -49,10 +46,9 @@
           <div class="container-fluid h-100">
             <a class="navbar-brand" style="color: #f7f7f7 ;"> Metro Events </a>
             <ul class="nav navbar-nav">
-              <li class="active"><a href="#">Home</a></li>
-              <li><a href='{% url "metroevent:user_dashboard" %}'>User Dashboard</a></li>
-              <li><a href='{% url "metroevent:organizer_dashboard" %}'>Organizer Dashboard</a></li>
-              <li><a href='{% url "metroevent:administrator_dashboard" %}'>Administrator Dashboard</a></li>
+              <li><a href='{% url "app:user-dashboard" %}'>User Dashboard</a></li>
+              <li><a href='{% url "app:organizer-dashboard" %}'>Organizer Dashboard</a></li>
+              <li><a href='{% url "app:admin-dashboard" %}'>Administrator Dashboard</a></li>
             </ul>
             <ul class="nav navbar-nav navbar-right">
               <li><a href="#"><span class="glyphicon glyphicon-user"></span> Sign Up</a></li>
