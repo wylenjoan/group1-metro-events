@@ -14,6 +14,8 @@ class RegularUser(models.Model):
     gender = models.CharField(max_length = 6, blank = True, null = True)
     created_at = models.DateTimeField(default = timezone.now)
     updated_at = models.DateTimeField(auto_now=True)
+    is_organizer = models.BooleanField(default=False)
+    is_admin = models.BooleanField(default=False)
 
     class Meta:
         db_table = "User"
@@ -31,3 +33,35 @@ class AdministratorUser(models.Model):
 
     class Meta:
         db_table = "Administrator"
+
+class Event(models.Model):
+    title = models.CharField(max_length = 128, default = "", blank = True, null = True)
+    description = models.CharField(max_length = 255, default = "", blank = True, null = True)
+    event_type  = models.CharField(max_length = 128, default = "", blank = True, null = True)
+    start_datetime = models.DateTimeField(default = timezone.now)
+    end_datetime = models.DateTimeField(default = timezone.now)
+    status = models.CharField(max_length = 128, default = "", blank = True, null = True)
+    upvotes_count = models.IntegerField(default = 0)
+    street = models.CharField(max_length = 128, default = "", blank = True, null = True)
+    city = models.CharField(max_length = 128, default = "", blank = True, null = True)
+    province = models.CharField(max_length = 128, default = "", blank = True, null = True)
+
+    class Meta:
+        db_table = "Event"
+
+class Request(models.Model):
+    request_type = models.CharField(max_length = 128, default = "", blank = True, null = True)
+    user_id = models.ForeignKey(RegularUser, on_delete=models.CASCADE, related_name='senders')
+
+    # for upgrade user
+    user_type = models.CharField(max_length = 128, default = "", blank = True, null = True)
+    
+    # for join event
+    event_id = models.ForeignKey(Event, on_delete=models.CASCADE, related_name='events')
+
+    is_approved = models.BooleanField(default=False)
+    created_at = models.DateTimeField(default = timezone.now)
+    updated_at = models.DateTimeField(auto_now=True)
+
+    class Meta:
+        db_table = "Request"
