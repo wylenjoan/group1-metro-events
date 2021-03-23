@@ -15,7 +15,7 @@ urlpatterns = [
     path('register/', views.UserRegistrationView.as_view(), name='register'),
 
     path('user-dashboard/', views.UserDashboardView.as_view(), name='user-dashboard'),
-    # path('user-dashboard/events', views.UserDashboardEventsView.as_view(), name='user-dashboard-events'),
+    #path('user-dashboard/events', views.UserDashboardEventsView.as_view(), name='user-dashboard-events'),
     # path('user-dashboard/profile', views.UserDashboardProfileView.as_view(), name='user-dashboard-profile'),
 
     path('organizer-dashboard/', views.OrganizerDashboardView.as_view(), name='organizer-dashboard'),

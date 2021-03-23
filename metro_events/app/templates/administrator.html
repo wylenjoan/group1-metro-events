@@ -5,137 +5,149 @@
     <!-- Buttons-->
     <h1>Administrator Dashboard</h1>
     <br>
-    <button class="btn btn-info" type="button" data-toggle="collapse" data-target="#view" id="btn1" href="#collapseButton">Upgrade Request</button>
-    <button class="btn btn-info" type="button" data-toggle="collapse" data-target="#view1" id="btn2" href="#collapseButton2">Event Request</button>
-    <button class="btn btn-info" type="button" data-toggle="collapse" data-target="#view2" id="btn3" href="#collapseButton3">List of User</button>
-    <button class="btn btn-info" type="button" data-toggle="collapse" data-target="#view3" id="btn4" href="#collapseButton4">List of Event</button>
+    <ul class="nav nav-tabs">
+          <li class="nav-item">
+              <a href="#UpgradeRequest" class="nav-link" data-toggle="tab">Upgrade Request</a>
+          </li>
+          <li class="nav-item">
+              <a href="#EventRequest" class="nav-link" data-toggle="tab">Event Request</a>
+          </li>
+          <li class="nav-item">
+              <a href="#ListofUser" class="nav-link" data-toggle="tab">List of User</a>
+          </li>
+          <li class="nav-item">
+              <a href="#ListofEvent" class="nav-link" data-toggle="tab">List of Event</a>
+          </li>
+    </ul>
     <br>
     <br>
-    <!--Start Events Collapse Table-->
-       <div class="collapse" id="view">
-        <div class="card mb-4">
-            <div class="card-header"><i class="fa fa-calendar mr-1"></i> Update Request </div>
-            <div class="card-body" >
-              <div class="table-responsive">
-                <table class="table" >
-                  <thead>
-                    <tr>
-                      <th>Name</th>
-                      <th>Email</th>
-                      <th></th>
-                    </tr>
-                  </thead>
-                  <tbody>
-                    <tr>
-                      <td>Sample</td>
-                      <td>emailsample@gmail.com</td>
-                      <td></td>
-                      <td>
-                        <button type="submit" class="btn btn-success"> <i class="fa fa-check"></i> Accept</button>
-                        <button type="button" class="btn btn-danger"><i class="fa fa-ban"></i> Decline</button>
-                      </td>
-                    </tr>
-                  </tbody>
-                </table>
-              </div>
-            </div>
-          </div>
-        </div>
-        <!--End Update Request Collapse Table-->
-        <!--Start of Event Request Collapse Table-->
-        <div class="collapse" id="view1">
-          <div class="card mb-4">
-              <div class="card-header"><i class="fa fa-flag"></i> Event Request </div>
-              <div class="card-body">
-                <div class="table-responsive">
-                  <table class="table">
-                    <thead>
-                      <tr>
-                        <th>Organizer Name</th>
-                        <th>Event</th>
-                        <th>Description</th>
-                        <th></th>
-                      </tr>
-                    </thead>
-                    <tbody>
-                      <tr>
-                        <td>Organizer's Name</td>
-                        <td>Biking</td>
-                        <td>LoremIpsum</td>
-                        <td></td>
-                        <td>
-                          <button type="submit" class="btn btn-success"> <i class="fa fa-check"></i> Accept</button>
-                          <button type="button" class="btn btn-danger"><i class="fa fa-ban"></i> Decline</button>
-                        </td>
-                      </tr>
-                    </tbody>
-                  </table>
+    <div class="tab-content">
+            <!--Start Events Collapse Table-->
+               <div class="tab-pane fade" id="UpgradeRequest">
+                <div class="card mb-4">
+                    <div class="card-header"><i class="fa fa-calendar mr-1"></i> Update Request </div>
+                    <div class="card-body" >
+                      <div class="table-responsive">
+                        <table class="table" >
+                          <thead>
+                            <tr>
+                              <th>Name</th>
+                              <th>Email</th>
+                              <th></th>
+                            </tr>
+                          </thead>
+                          <tbody>
+                            <tr>
+                              <td>Sample</td>
+                              <td>emailsample@gmail.com</td>
+                              <td></td>
+                              <td>
+                                <button type="submit" class="btn btn-success"> <i class="fa fa-check"></i> Accept</button>
+                                <button type="button" class="btn btn-danger"><i class="fa fa-ban"></i> Decline</button>
+                              </td>
+                            </tr>
+                          </tbody>
+                        </table>
+                      </div>
+                    </div>
+                  </div>
                 </div>
-              </div>
-          </div>
-        </div>
-        <!--End of Event Request Collapse Table-->
-        <!--Start of List of Users Collapse Table-->
-        <div class="collapse" id="view3">
-          <div class="card mb-4">
-              <div class="card-header"><i class="fa fa-list"></i> List of Users </div>
-              <div class="card-body">
-                <div class="table-responsive">
-                  <table class="table">
-                    <thead>
-                      <tr>
-                        <th>Organizer Name</th>
-                        <th>Event</th>
-                        <th>Description</th>
-                        <th></th>
-                      </tr>
-                    </thead>
-                    <tbody>
-                      <tr>
-                        <td>Organizer's Name</td>
-                        <td>Biking</td>
-                        <td>LoremIpsum</td>
-                        <td></td>
-                        <td>
-                          <button type="submit" class="btn btn-danger"> <i class="fa fa-trash"></i> Remove</button>
-                      </tr>
-                    </tbody>
-                  </table>
+                <!--End Update Request Collapse Table-->
+                <!--Start of Event Request Collapse Table-->
+                <div class="tab-pane fade" id="EventRequest">
+                  <div class="card mb-4">
+                      <div class="card-header"><i class="fa fa-flag"></i> Event Request </div>
+                      <div class="card-body">
+                        <div class="table-responsive">
+                          <table class="table">
+                            <thead>
+                              <tr>
+                                <th>Organizer Name</th>
+                                <th>Event</th>
+                                <th>Description</th>
+                                <th></th>
+                              </tr>
+                            </thead>
+                            <tbody>
+                              <tr>
+                                <td>Organizer's Name</td>
+                                <td>Biking</td>
+                                <td>LoremIpsum</td>
+                                <td></td>
+                                <td>
+                                  <button type="submit" class="btn btn-success"> <i class="fa fa-check"></i> Accept</button>
+                                  <button type="button" class="btn btn-danger"><i class="fa fa-ban"></i> Decline</button>
+                                </td>
+                              </tr>
+                            </tbody>
+                          </table>
+                        </div>
+                      </div>
+                  </div>
                 </div>
-              </div>
-          </div>
-        </div>
-        <!--End of List of Users Collapse Table-->
-        <!--Start of List of Events Collapse Table-->
-        <div class="collapse" id="view4">
-          <div class="card mb-4">
-            <div class="card-header"><i class="fa fa-list"></i> List of Events </div>
-            <div class="card-body" >
-              <div class="table-responsive">
-                <table class="table" >
-                  <thead>
-                    <tr>
-                      <th>Title</th>
-                      <th>Event Type</th>
-                      <th>Status</th>
-                      <th></th>
-                    </tr>
-                  </thead>
-                  <tbody>
-                    <tr>
-                      <td>Sample</td>
-                      <td>emailsample@gmail.com</td>
-                      <td></td>
-                      <td>
-                        <button type="submit" class="btn btn-danger"> <i class="fa fa-trash"></i> Remove</button>
-                      </td>
-                    </tr>
-                  </tbody>
-                </table>
-              </div>
-            </div>
-          </div>
-        </div>
-        <!--End of List of Users Collapse Table-->
+                <!--End of Event Request Collapse Table-->
+                <!--Start of List of Users Collapse Table-->
+                <div class="tab-pane fade" id="ListofUser">
+                  <div class="card mb-4">
+                      <div class="card-header"><i class="fa fa-list"></i> List of Users </div>
+                      <div class="card-body">
+                        <div class="table-responsive">
+                          <table class="table">
+                            <thead>
+                              <tr>
+                                <th>Organizer Name</th>
+                                <th>Event</th>
+                                <th>Description</th>
+                                <th></th>
+                              </tr>
+                            </thead>
+                            <tbody>
+                              <tr>
+                                <td>Organizer's Name</td>
+                                <td>Biking</td>
+                                <td>LoremIpsum</td>
+                                <td></td>
+                                <td>
+                                  <button type="submit" class="btn btn-danger"> <i class="fa fa-trash"></i> Remove</button>
+                              </tr>
+                            </tbody>
+                          </table>
+                        </div>
+                      </div>
+                  </div>
+                </div>
+                <!--End of List of Users Collapse Table-->
+                <!--Start of List of Events Collapse Table-->
+                <div class="tab-pane fade" id="ListofEvent">
+                  <div class="card mb-4">
+                    <div class="card-header"><i class="fa fa-list"></i> List of Events </div>
+                    <div class="card-body" >
+                      <div class="table-responsive">
+                        <table class="table" >
+                          <thead>
+                            <tr>
+                              <th>Title</th>
+                              <th>Event Type</th>
+                              <th>Status</th>
+                              <th></th>
+                            </tr>
+                          </thead>
+                          <tbody>
+                            <tr>
+                              <td>Sample</td>
+                              <td>emailsample@gmail.com</td>
+                              <td></td>
+                              <td>
+                                <button type="submit" class="btn btn-danger"> <i class="fa fa-trash"></i> Remove</button>
+                              </td>
+                            </tr>
+                          </tbody>
+                        </table>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+                <!--End of List of Users Collapse Table-->
+    </div>
 </div>
 {% endblock content %}

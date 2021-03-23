@@ -5,41 +5,48 @@
     <!-- Buttons-->
     <h1>Organizer Dashboard</h1>
     <br>
-    <button class="btn btn-info" type="button" data-toggle="collapse" data-target="#view" id="btn1" href="#collapseButton">Events List</button>
-    <button class="btn btn-info" type="button" data-toggle="collapse" data-target="#view1" id="btn2" href="#collapseButton2">Join Request</button>
+    <ul class="nav nav-tabs">
+          <li class="nav-item">
+              <a href="#EventsList" class="nav-link" data-toggle="tab">Events List</a>
+          </li>
+          <li class="nav-item">
+              <a href="#JoinRequest" class="nav-link" data-toggle="tab">Join Request</a>
+          </li>
+    </ul>
     <br>
     <br>
-      <!--Events Collapse Table-->
-       <div class="collapse" id="view">
-          <div class="card mb-4">
-            <div class="card-header"><i class="fa fa-list mr-1"></i> Events List </div>
-                <div class="card-body">
-                  <div class="table-responsive">
-                    <table class="table">
-                        <p align="left"><a type = "button" class="btn btn-white" data-toggle="modal" data-target="#addmodal"><i class="fa fa-plus"></i> Add Event</a></p>
-                      <thead>
-                        <tr>
-                          <th>Title</th>
-                          <th>Description</th>
-                          <th></th>
-                        </tr>
-                      </thead>
-                      <tbody>
-                        <tr>
-                          <td>Title</td>
-                          <td>Description</td>
-                          <td>
-                            <button type="submit" class="btn btn-primary" data-toggle="modal" data-target="#viewmodal"><i class="fa fa-eye"></i> View</button>
-                            <button type="submit" class="btn btn-dark" data-toggle="modal" data-target="#updatemodal"><i class="fa fa-pencil"></i> Update</button>
-                            <button type="button" class="btn btn-danger"><i class="fa fa-trash"></i> Delete</button>
-                          </td>
-                        </tr>
-                      </tbody>
-                    </table>
-                  </div>
-                </div>
-        <!--End of Events Collapse Table-->
-          <!-- Add Event -->
+    <div class="tab-content">
+          <!--Events Collapse Table-->
+           <div class="tab-pane fade" id="EventsList">
+              <div class="card mb-4">
+                <div class="card-header"><i class="fa fa-list mr-1"></i> Events List </div>
+                    <div class="card-body">
+                      <div class="table-responsive">
+                        <table class="table">
+                            <p align="left"><a type = "button" class="btn btn-white" data-toggle="modal" data-target="#addmodal"><i class="fa fa-plus"></i> Add Event</a></p>
+                          <thead>
+                            <tr>
+                              <th>Title</th>
+                              <th>Description</th>
+                              <th></th>
+                            </tr>
+                          </thead>
+                          <tbody>
+                            <tr>
+                              <td>Title</td>
+                              <td>Description</td>
+                              <td>
+                                <button type="submit" class="btn btn-primary" data-toggle="modal" data-target="#viewmodal"><i class="fa fa-eye"></i> View</button>
+                                <button type="submit" class="btn btn-dark" data-toggle="modal" data-target="#updatemodal"><i class="fa fa-pencil"></i> Update</button>
+                                <button type="button" class="btn btn-danger"><i class="fa fa-trash"></i> Delete</button>
+                              </td>
+                            </tr>
+                          </tbody>
+                        </table>
+                      </div>
+                    </div>
+            <!--End of Events Collapse Table-->
+            <!-- Add Event -->
               <div class="modal fade" id="addmodal" tabindex="-1" role="dialog" aria-labelledby="addmodal" aria-hidden="true">
                 <div class="modal-dialog" role="document">
                   <div class="modal-content">
@@ -197,8 +204,8 @@
           </div>
         </div>
 
-        <!--Profile Collapse Table-->
-        <div class="collapse" id="view1">
+        <!--JoinRequest Collapse Table-->
+        <div class="tab-pane fade" id="JoinRequest">
           <div class="card mb-4">
             <div class="card-header"><i class="fa fa-plus-square"></i> Join Request </div>
               <div class="card-body">
@@ -226,5 +233,6 @@
             </div>
           </div>
         </div>
+    </div>
 </div>
 {% endblock content %}
