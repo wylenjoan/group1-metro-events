@@ -1,3 +1,5 @@
+{% extends "base_1.1.html" %}
+{% load static %}
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -6,7 +8,120 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Dashboard</title>
 </head>
+{% block content %}
 <body>
     <h1>This is the dashboard page.</h1>
+    <div class="container">
+    <!-- Buttons-->
+    <h1>User Dashboard</h1>
+    <br>
+    <button class="btn btn-info" type="button" data-toggle="collapse" data-target="#view" id="btn1" href="#collapseButton">Events</button>
+    <button class="btn btn-info" type="button" data-toggle="collapse" data-target="#view1" id="btn2" href="#collapseButton2">Profile</button>
+    <br>
+    <br>
+    <!--Events Collapse Table-->
+       <div class="collapse" id="view">
+            <div class="card mb-4">
+                <div class="card-header"><i class="fa fa-calendar mr-1"></i> Event</div>
+                    <div class="card-body">
+                        <div class="table-responsive">
+                            <table class="table" >
+                                <thead>
+                                  <tr>
+                                    <th>Title</th>
+                                    <th>Description</th>
+                                    <th>Event Type</th>
+                                    <th>Start Date</th>
+                                    <th>End Date</th>
+                                    <th>Start Time</th>
+                                    <th>End Time</th>
+                                    <th>Status</th>
+                                    <th>Upvotes Count</th>
+                                    <th></th>
+                                  </tr>
+                                </thead>
+                                <tbody>
+                                {% for event in event %}
+                                  <tr>
+                                    <td>{{event.title}}</td>
+                                    <td>{{event.description}}</td>
+                                    <td>{{event.event_type}}</td>
+                                    <th>{{event.start_date}}</th>
+                                    <th>{{event.end_date}}</th>
+                                    <th>{{event.start_time}}</th>
+                                    <th>{{event.end_time}}</th>
+                                    <th>{{event.status}}</th>
+                                    <th>{{event.upvotes_count}}</th>
+                                    <td>
+                                      <button type="submit" class="btn btn-success"> <i class="fa fa-check"></i> Join</button>
+                                    </td>
+                                  </tr>
+                                {% endfor %}
+                                </tbody>
+                            </table>
+                        </div>
+                    </div>
+            </div>
+        </div>
+        <!--Profile Collapse Table-->
+        <div class="collapse" id="view1">
+            <div class="card mb-4" >
+                    <div class="card-header"><i class="fa fa-user mr-1"></i> Profile</div>
+                    <div class="card-body" >
+                        <div class="table-responsive" >
+                            {% for user in user %}
+                            <form class="form" action="##" method="POST" id="userProfileForm">
+                                  <div class="form-group"> 
+                                      <div class="col-xs-6">
+                                          <label for="first_name"><h4>First name</h4></label>
+                                          <input type="text" class="form-control" name="first_name" id="first_name" placeholder="first name" value = "{{user.first_name}}">
+                                      </div>
+                                  </div>
+                                  <div class="form-group">
+                                      
+                                      <div class="col-xs-6">
+                                        <label for="last_name"><h4>Last name</h4></label>
+                                          <input type="text" class="form-control" name="last_name" id="last_name" placeholder="last name" value = "{{user.last_name}}">
+                                      </div>
+                                  </div>
+                                  <div class="form-group">
+                                      <div class="col-xs-6">
+                                          <label for="gender"><h4>Gender</h4></label>
+                                            <select class="form-control" id="exampleFormControlSelect1" value = "{{user.gender}}">
+                                              <option>Male</option>
+                                              <option>Female</option>
+                                              <option>I prefer not to say</option>
+                                            </select>
+                                      </div>
+                                  </div>
+                                  <div class="form-group">
+                                      <div class="col-xs-6">
+                                          <label for="email"><h4>Email</h4></label>
+                                          <input type="email" class="form-control" name="email" id="email" placeholder="your@email.com" value = "{{user.email}}">
+                                      </div>
+                                  </div>
+                                 
+                                  <div class="form-group">
+                                      <div class="col-xs-6">
+                                          <label for="password"><h4>Password</h4></label>
+                                          <input type="password" class="form-control" name="password" id="password" placeholder="password" value = "{{user.password}}">
+                                      </div>
+                                  </div>
+                                  <div class="form-group">
+                                       <div class="col-xs-12">
+                                            <br>
+                                            <button class="btn btn-success" type="submit">Organizer Request</button>
+                                            <button class="btn btn-primary" id="btnUpdate" type="submit">Update</button>
+                                            <button class="btn btn-danger" type="reset">Cancel</button>
+                                        </div>
+                                  </div>
+                            </form>
+                            {% endfor %}
+                        </div>
+                    </div>
+            </div>
+        </div>
+</div>
 </body>
+{% endblock content %}
 </html>
