@@ -13,32 +13,96 @@
     <style>
         html, body {
             height: 100%;
+            overflow: hidden;
+        }
+
+        .container {
+            border: 1px; 
+            border-color: #0275d8; 
+            border-style: solid;
+            padding: 40px;
+            width: fit-content;
+            margin-top: 64px;
         }
     </style>
 </head>
 <body>
-    <h1 class="text-center">Registration</h1><br>
+    
 
-    <div class="container text-center d-flex align-items-center justify-content-center">
+    <div class="container">
         <form action="{% url 'app:register' %}" method="post">
             {% csrf_token %}
             
-            <label for="first_name">First name:</label><br>
-            <input type="text" id="first_name" name="first_name"><br>
+            <div class="row d-flex justify-content-center" style="padding-bottom: 20px;">
+                <h1 class="text-center">Registration</h1><br>
+            </div>
 
-            <label for="last_name">Last name:</label><br>
-            <input type="text" id="last_name" name="last_name"><br>
-
-            <label for="gender">Gender:</label><br>
-            <input type="text" id="gender" name="gender"><br>
-
-            <label for="email">Email:</label><br>
-            <input type="text" id="email" name="email"><br>
-
-            <label for="password">Password:</label><br>
-            <input type="text" id="password" name="password"><br>
+            <div class="row">
+                <div class="col-4">
+                    <label for="first_name">First name:</label>
+                </div>
+                <div class="col-8">
+                    <input type="text" class="form-control" id="first_name" name="first_name"><br>
+                </div>
+            </div>
             
-            <input type="submit" value="register">
+            <div class="row">
+                <div class="col-4">
+                    <label for="last_name">Last name:</label>
+                </div>
+                <div class="col-8">
+                    <input type="text" class="form-control" id="last_name" name="last_name"><br>
+                </div>
+            </div>
+            
+            <div class="row">
+                <div class="col-4">
+                    <label for="gender">Gender:</label>
+                </div>
+                <div class="col-8">
+                    <select class="form-control" name="gender">
+                        <option>Male</option>
+                        <option>Female</option>
+                    </select>
+                    <br>
+                </div>
+            </div>
+            
+            <div class="row">
+                <div class="col-4">
+                    <label for="email">Email:</label>
+                </div>
+                <div class="col-8">
+                    <input type="text" class="form-control" id="email" name="email"><br>
+                </div>
+            </div>
+
+            <div class="row">
+                <div class="col-4">
+                    <label for="password">Password:</label>
+                </div>
+                <div class="col-8">
+                    <input type="password" class="form-control" id="password" name="password"><br>
+                </div>                
+            </div>
+
+            <div class="row d-flex justify-content-center">
+                <div class="col-12">
+                    <p>Username will be generated as firstname.lastname</p><br>
+                </div>
+            </div>
+            
+            <div class="row d-flex justify-content-center">
+                <div class="col-12">
+                    <input type="submit" value="REGISTER" class="btn btn-primary btn-block"><br>
+                </div>
+            </div>
+
+            <div class="row d-flex justify-content-center text-center">
+                <div class="col-12">
+                    <a href='{% url "app:login" %}'>Login</a>
+                </div>
+            </div>
             
         </form>
     </div>  
