@@ -41,30 +41,28 @@
 </head>
 
 <body>
-    <head>
-        <nav class="navbar navbar-inverse navbar-expand-lg navbar-light">
-          <div class="container-fluid h-100">
-            <a class="navbar-brand" style="color: #f7f7f7 ;"> Metro Events </a>
-            <ul class="nav navbar-nav">
-              <li><a href='{% url "app:user-dashboard" %}'>User Dashboard</a></li>
-              {% if regular_user.is_organizer == True %}
-              <li><a href='{% url "app:organizer-dashboard" %}'>Organizer Dashboard</a></li>
-              {% endif %}
-              {% if regular_user.is_admin == True %}
-              <li><a href='{% url "app:admin-dashboard" %}'>Administrator Dashboard</a></li>
-              {% endif %}
-            </ul>
-            <ul class="nav navbar-nav navbar-right">
-              <li><a href='{% url "app:logout" %}'><span class="glyphicon glyphicon-log-out"></span> Logout</a></li>
-            </ul>
-          </div>
-        </nav>
-     </head>     
-        <div class="container">
-            {% block content %}
-            <br>
-            {% endblock content %}
+      <nav class="navbar navbar-inverse navbar-expand-lg navbar-light">
+        <div class="container-fluid h-100">
+          <a class="navbar-brand" style="color: #f7f7f7 ;"> Metro Events </a>
+          <ul class="nav navbar-nav">
+            <li><a href='{% url "app:user-dashboard" %}'>User Dashboard</a></li>
+            {% if regular_user.is_organizer == True %}
+            <li><a href='{% url "app:organizer-dashboard" %}'>Organizer Dashboard</a></li>
+            {% endif %}
+            {% if regular_user.is_admin == True %}
+            <li><a href='{% url "app:admin-dashboard" %}'>Administrator Dashboard</a></li>
+            {% endif %}
+          </ul>
+          <ul class="nav navbar-nav navbar-right">
+            <li><a href='{% url "app:logout" %}'><span class="glyphicon glyphicon-log-out"></span> Logout</a></li>
+          </ul>
         </div>
+      </nav>
+      <div class="container">
+          {% block content %}
+          <br>
+          {% endblock content %}
+      </div>
   
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
     <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/js/bootstrap.min.js"></script>
