@@ -90,12 +90,12 @@ class UserDashboardView(View):
                 return redirect('app:user-dashboard')
 
             elif 'btnApplyOrganizer' in request.POST:
-                request = Request.objects.create(request_type = 'upgrade_organizer', user_id = regular_user, user_type = 'organizer', is_approved = False,)
+                request = Request.objects.create(request_type = 'upgrade', user_id = regular_user, user_type = 'organizer', is_approved = False,)
                 
                 return redirect('app:user-dashboard')
 
             elif 'btnApplyAdmin' in request.POST:
-                request = Request.objects.create(request_type = 'upgrade_admin', user_id = regular_user, user_type = 'admin', is_approved = False,)
+                request = Request.objects.create(request_type = 'upgrade', user_id = regular_user, user_type = 'admin', is_approved = False,)
                 
                 return redirect('app:user-dashboard')
 
@@ -125,4 +125,23 @@ class OrganizerDashboardView(View):
 
 class AdminDashboardView(View):
     def get(self, request):
-        return render(request, 'administrator.html')
+        if not request.user.is_authenticated:
+            return render(request, 'login.html')
+        user = request.user
+        regular_user = RegularUser.objects.get(user_id=user)
+        admin_user = AdministratorUser.objects.get(regular_user_id=regular_user)
+
+        events = Event.objects.filter(is_deleted=False)
+        event_requests = Request.objects.filter(is_approved=False, request_type='create_event')
+        upgrade_requests = Request.objects.filter(is_approved=False, request_type='upgrade')
+        users = RegularUser.objects.filter(is_deleted=False)
+
+        context = {
+            'events': events,
+            'regular_user': regular_user,
+            'admin_user': admin_user,
+            'event_requests': event_requests,
+            'upgrade_requests': upgrade_requests,
+            'users': users,
+        }
+        return render(request, 'administrator.html', context)

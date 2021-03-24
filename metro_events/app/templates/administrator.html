@@ -7,16 +7,16 @@
     <br>
     <ul class="nav nav-tabs">
           <li class="nav-item">
-              <a href="#UpgradeRequest" class="nav-link" data-toggle="tab">Upgrade Request</a>
+              <a href="#UpgradeRequest" class="nav-link" data-toggle="tab">List of Upgrade Requests</a>
           </li>
           <li class="nav-item">
-              <a href="#EventRequest" class="nav-link" data-toggle="tab">Event Request</a>
+              <a href="#EventRequest" class="nav-link" data-toggle="tab">List of Event Requests</a>
           </li>
           <li class="nav-item">
-              <a href="#ListofUser" class="nav-link" data-toggle="tab">List of User</a>
+              <a href="#ListofUser" class="nav-link" data-toggle="tab">List of Users</a>
           </li>
           <li class="nav-item">
-              <a href="#ListofEvent" class="nav-link" data-toggle="tab">List of Event</a>
+              <a href="#ListofEvent" class="nav-link" data-toggle="tab">List of Events</a>
           </li>
     </ul>
     <br>
@@ -33,19 +33,22 @@
                             <tr>
                               <th>Name</th>
                               <th>Email</th>
+                              <th>User Type</th>
                               <th></th>
                             </tr>
                           </thead>
                           <tbody>
+                            {% for upgrade_request in upgrade_requests %}
                             <tr>
-                              <td>Sample</td>
-                              <td>emailsample@gmail.com</td>
-                              <td></td>
+                              <td>{{ upgrade_request.user_id.user_id.first_name }} {{ upgrade_request.user_id.user_id.last_name }}</td>
+                              <td>{{ upgrade_request.user_id.user_id.email }}</td>
+                              <td>{{ upgrade_request.user_type }}</td>
                               <td>
-                                <button type="submit" class="btn btn-success"> <i class="fa fa-check"></i> Accept</button>
-                                <button type="button" class="btn btn-danger"><i class="fa fa-ban"></i> Decline</button>
+                                <button type="submit" class="btn btn-success" id="btnAcceptUpgrade" name="btnAcceptUpgrade"> <i class="fa fa-check"></i> Accept</button>
+                                <button type="submit" class="btn btn-danger" id="btnDeclineUpgrade" id="btnDeclineUpgrade"><i class="fa fa-ban"></i> Decline</button>
                               </td>
                             </tr>
+                            {% endfor %}
                           </tbody>
                         </table>
                       </div>
@@ -63,22 +66,24 @@
                             <thead>
                               <tr>
                                 <th>Organizer Name</th>
-                                <th>Event</th>
+                                <th>Event Title</th>
                                 <th>Description</th>
                                 <th></th>
                               </tr>
                             </thead>
                             <tbody>
+                              {% for event_request in event_requests %}
                               <tr>
-                                <td>Organizer's Name</td>
-                                <td>Biking</td>
-                                <td>LoremIpsum</td>
+                                <td>{{ event_request.user_id.user_id.first_name }} {{ event_request.user_id.user_id.last_name }}</td>
+                                <td>{{ event_request.event_id.title }}</td>
+                                <td>{{ event_request.event_id.description }}</td>
                                 <td></td>
                                 <td>
-                                  <button type="submit" class="btn btn-success"> <i class="fa fa-check"></i> Accept</button>
-                                  <button type="button" class="btn btn-danger"><i class="fa fa-ban"></i> Decline</button>
+                                  <button type="submit" class="btn btn-success" id="btnAcceptCreateEvent" name="btnAcceptCreateEvent"> <i class="fa fa-check"></i> Accept</button>
+                                  <button type="button" class="btn btn-danger" id="btnDeclineCreateEvent" name="btnDeclineCreateEvent"><i class="fa fa-ban"></i> Decline</button>
                                 </td>
                               </tr>
+                              {% endfor %}
                             </tbody>
                           </table>
                         </div>
@@ -95,21 +100,26 @@
                           <table class="table">
                             <thead>
                               <tr>
-                                <th>Organizer Name</th>
-                                <th>Event</th>
-                                <th>Description</th>
+                                <th>Last Name</th>
+                                <th>First Name</th>
+                                <th>Email</th>
+                                <th>Username</th>
+                                <th>Gender</th>
                                 <th></th>
                               </tr>
                             </thead>
                             <tbody>
+                              {% for user in users %}
                               <tr>
-                                <td>Organizer's Name</td>
-                                <td>Biking</td>
-                                <td>LoremIpsum</td>
-                                <td></td>
+                                <td>{{ user.user_id.first_name }}</td>
+                                <td>{{ user.user_id.last_name }}</td>
+                                <td>{{ user.user_id.email }}</td>
+                                <td>{{ user.user_id.username }}</td>
+                                <td>{{ user.gender }}</td>
                                 <td>
                                   <button type="submit" class="btn btn-danger"> <i class="fa fa-trash"></i> Remove</button>
                               </tr>
+                              {% endfor %}
                             </tbody>
                           </table>
                         </div>
@@ -127,20 +137,33 @@
                           <thead>
                             <tr>
                               <th>Title</th>
+                              <th>Description</th>
                               <th>Event Type</th>
-                              <th>Status</th>
+                              <th>Start</th>
+                              <th>End</th>
+                              <th>Street</th>
+                              <th>City</th>
                               <th></th>
                             </tr>
                           </thead>
                           <tbody>
+                            {% for event in events %}
                             <tr>
-                              <td>Sample</td>
-                              <td>emailsample@gmail.com</td>
-                              <td></td>
+                              <td>{{event.title}}</td>
+                              <td>{{event.description}}</td>
+                              <td>{{event.event_type}}</td>
+                              <td>{{event.start_datetime}}</td>
+                              <td>{{event.end_datetime}}</td>
+                              <td>{{event.street}}</td>
+                              <td>{{event.city}}</td>
                               <td>
-                                <button type="submit" class="btn btn-danger"> <i class="fa fa-trash"></i> Remove</button>
+                                <!-- <form action="{% url 'app:user-dashboard' %}" method="post">
+                                  {% csrf_token %} -->
+                                  <button type="submit" class="btn btn-danger"> <i class="fa fa-trash"></i> Remove</button>
+                                <!-- </form> -->
                               </td>
                             </tr>
+                            {% endfor %}
                           </tbody>
                         </table>
                       </div>
