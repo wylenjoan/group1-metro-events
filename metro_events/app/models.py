@@ -16,19 +16,20 @@ class RegularUser(models.Model):
     updated_at = models.DateTimeField(auto_now=True)
     is_organizer = models.BooleanField(default=False)
     is_admin = models.BooleanField(default=False)
+    is_deleted = models.BooleanField(default=False)
 
     class Meta:
         db_table = "User"
 
 class OrganizerUser(models.Model):
-    regular_user_id = models.ForeignKey(RegularUser, on_delete=models.CASCADE, related_name='organizers')
+    regular_user_id = models.ForeignKey(RegularUser, on_delete=models.CASCADE, related_name='organizer')
     granted_at = models.DateTimeField(default = timezone.now)
 
     class Meta:
         db_table = "Organizer"
 
 class AdministratorUser(models.Model):
-    regular_user_id = models.ForeignKey(RegularUser, on_delete=models.CASCADE, related_name='administrators')
+    regular_user_id = models.ForeignKey(RegularUser, on_delete=models.CASCADE, related_name='administrator')
     granted_at = models.DateTimeField(default = timezone.now)
 
     class Meta:
@@ -46,17 +47,24 @@ class Event(models.Model):
     city = models.CharField(max_length = 128, default = "", blank = True, null = True)
     province = models.CharField(max_length = 128, default = "", blank = True, null = True)
 
+    organizer_id = models.ForeignKey(OrganizerUser, on_delete=models.CASCADE, related_name='organizer', blank = True, null = True)
+    is_deleted = models.BooleanField(default=False)
+
     class Meta:
         db_table = "Event"
 
 class Request(models.Model):
     request_type = models.CharField(max_length = 128, default = "", blank = True, null = True)
-    user_id = models.ForeignKey(RegularUser, on_delete=models.CASCADE, related_name='senders')
+    # possible request_type: upgrade, join_event, create_event
 
-    # for upgrade user
+    user_id = models.ForeignKey(RegularUser, on_delete=models.CASCADE, related_name='sender')
+
+    # for upgrade
     user_type = models.CharField(max_length = 128, default = "", blank = True, null = True)
+    # possible user_type: organizer, admin
     
-    # for join event
+    # for join_event
+    # for create_event
     event_id = models.ForeignKey(Event, on_delete=models.CASCADE, related_name='events', blank=True, null=True)
 
     is_approved = models.BooleanField(default=False)
