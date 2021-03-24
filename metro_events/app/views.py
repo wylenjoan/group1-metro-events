@@ -121,7 +121,18 @@ class UserDashboardView(View):
     
 class OrganizerDashboardView(View):
     def get(self, request):
-        return render(request, 'organizer.html')
+        if not request.user.is_authenticated:
+            return render(request, 'login.html')
+        user = request.user
+        regular_user = RegularUser.objects.get(user_id=user)
+        organizer_user = OrganizerUser.objects.get(regular_user_id=regular_user)
+
+        context = {
+            'regular_user': regular_user,
+            'organizer_user': organizer_user,
+        }
+
+        return render(request, 'organizer.html', context)
 
 class AdminDashboardView(View):
     def get(self, request):
