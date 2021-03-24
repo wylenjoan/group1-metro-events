@@ -1,4 +1,4 @@
-<!-- {% extends "base_1.1.html" %} -->
+{% extends "base_1.1.html" %}
 {% load static %}
 <!DOCTYPE html>
 <html lang="en">
@@ -11,7 +11,7 @@
 {% block content %}
 <body>
     <div class="container">
-    <h1>User Dashboard</h1>
+    <h1>Hello, {{user.first_name}} {{user.last_name}}!</h1>
     <br>
     <ul class="nav nav-tabs">
           <li class="nav-item">
@@ -35,30 +35,31 @@
                                     <th>Title</th>
                                     <th>Description</th>
                                     <th>Event Type</th>
-                                    <th>Start Date</th>
-                                    <th>End Date</th>
-                                    <th>Start Time</th>
-                                    <th>End Time</th>
-                                    <th>Status</th>
-                                    <th>Upvotes Count</th>
+                                    <th>Start</th>
+                                    <th>End</th>
+                                    <th>Street</th>
+                                    <th>City</th>
                                     <th></th>
                                   </tr>
                                 </thead>
                                 <tbody>
+                                  {% for event in events %}
                                   <tr>
                                     <td>{{event.title}}</td>
                                     <td>{{event.description}}</td>
                                     <td>{{event.event_type}}</td>
-                                    <th>{{event.start_date}}</th>
-                                    <th>{{event.end_date}}</th>
-                                    <th>{{event.start_time}}</th>
-                                    <th>{{event.end_time}}</th>
-                                    <th>{{event.status}}</th>
-                                    <th>{{event.upvotes_count}}</th>
+                                    <th>{{event.start_datetime}}</th>
+                                    <th>{{event.end_datetime}}</th>
+                                    <th>{{event.street}}</th>
+                                    <th>{{event.city}}</th>
                                     <td>
-                                      <button type="submit" class="btn btn-success"> <i class="fa fa-check"></i> Join</button>
+                                      <form action="{% url 'app:user-dashboard' %}" method="post">
+                                        {% csrf_token %}
+                                        <button type="submit" class="btn btn-success" name="btnJoinEvent" id="btnJoinEvent"> <i class="fa fa-check"></i> Join</button>
+                                      </form>
                                     </td>
                                   </tr>
+                                  {% endfor %}
                                 </tbody>
                             </table>
                         </div>
@@ -71,49 +72,65 @@
                         <div class="card-header"><i class="fa fa-user mr-1"></i> Profile</div>
                         <div class="card-body" >
                             <div class="table-responsive">
-                                <form class="form" action="##" method="POST" id="userProfileForm">
+                                <form action="{% url 'app:user-dashboard' %}" method="POST" id="userProfileForm" enctype="multipart/form-data">
+                                    {% csrf_token %}
                                       <div class="form-group"> 
                                           <div class="col-xs-6">
                                               <label for="first_name"><h4>First name</h4></label>
-                                              <input type="text" class="form-control" name="first_name" id="first_name" placeholder="first name" value = "{{user.first_name}}">
+                                              <input type="text" class="form-control" name="first_name" id="first_name" placeholder="first name" value="{{user.first_name}}" readonly>
                                           </div>
                                       </div>
                                       <div class="form-group">
                                           
                                           <div class="col-xs-6">
                                             <label for="last_name"><h4>Last name</h4></label>
-                                              <input type="text" class="form-control" name="last_name" id="last_name" placeholder="last name" value = "{{user.last_name}}">
+                                              <input type="text" class="form-control" name="last_name" id="last_name" placeholder="last name" value="{{user.last_name}}" readonly>
                                           </div>
                                       </div>
                                       <div class="form-group">
                                           <div class="col-xs-6">
                                               <label for="gender"><h4>Gender</h4></label>
-                                                <select class="form-control" id="exampleFormControlSelect1" value = "{{user.gender}}">
-                                                  <option>Male</option>
+                                                <select class="form-control" id="gender" name="gender" value="{{regular_user.gender}}" readonly>
+                                                  {% if regular_user.gender == 'Male'%}
+                                                  <option selected>Male</option>
                                                   <option>Female</option>
-                                                  <option>I prefer not to say</option>
+                                                  {% endif %}
+                                                  {% if regular_user.gender == 'Female'%}
+                                                  <option>Male</option>
+                                                  <option selected>Female</option>
+                                                  {% endif %}
                                                 </select>
                                           </div>
                                       </div>
+
+                                      <div class="form-group">
+                                        <div class="col-xs-6">
+                                            <label for="username"><h4>Username</h4></label>
+                                            <input type="text" class="form-control" name="username" id="username" value="{{user.username}}" readonly>
+                                        </div>
+                                      </div>
+
                                       <div class="form-group">
                                           <div class="col-xs-6">
                                               <label for="email"><h4>Email</h4></label>
-                                              <input type="email" class="form-control" name="email" id="email" placeholder="your@email.com" value = "{{user.email}}">
+                                              <input type="email" class="form-control" name="email" id="email" value="{{user.email}}" readonly>
                                           </div>
                                       </div>
                                      
                                       <div class="form-group">
                                           <div class="col-xs-6">
                                               <label for="password"><h4>Password</h4></label>
-                                              <input type="password" class="form-control" name="password" id="password" placeholder="password" value = "{{user.password}}">
+                                              <input type="password" class="form-control" name="password" id="password" value="{{user.password}}" hidden>
                                           </div>
                                       </div>
+                                      <input type="text" class="form-control" name="user_id" id="user_id" placeholder="first name" value="{{user}}" hidden>
                                       <div class="form-group">
                                            <div class="col-xs-12">
                                                 <br>
-                                                <button class="btn btn-success" type="submit">Organizer Request</button>
-                                                <button class="btn btn-primary" id="btnUpdate" type="submit">Update</button>
-                                                <button class="btn btn-danger" type="reset">Cancel</button>
+                                                <button class="btn btn-success" type="submit" id="btnApplyOrganizer" name="btnApplyOrganizer">Apply as Organizer</button>
+                                                <button class="btn btn-warning" type="submit" id="btnApplyAdmin" name="btnApplyAdmin">Apply as Administrator</button>
+                                                <!-- <button class="btn btn-primary" type="submit" id="btnUpdateUser" name="btnUpdateUser">Update</button> -->
+                                                <!-- <button class="btn btn-danger"  type="reset"  id="btnUpdate" name="btnUpdate">Cancel</button> -->
                                             </div>
                                       </div>
                                 </form>

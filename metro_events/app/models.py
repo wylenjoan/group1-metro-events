@@ -57,7 +57,7 @@ class Request(models.Model):
     user_type = models.CharField(max_length = 128, default = "", blank = True, null = True)
     
     # for join event
-    event_id = models.ForeignKey(Event, on_delete=models.CASCADE, related_name='events')
+    event_id = models.ForeignKey(Event, on_delete=models.CASCADE, related_name='events', blank=True, null=True)
 
     is_approved = models.BooleanField(default=False)
     created_at = models.DateTimeField(default = timezone.now)
