@@ -198,4 +198,26 @@ class AdminDashboardView(View):
                 return redirect('app:admin-dashboard')
 
             # Remove User
+            elif 'btnRemoveUser' in request.POST:
+                list_user_id = request.POST.get('list_user_id')
+                list_user = RegularUser.objects.get(id=list_user_id)
+                print(list_user_id)
+                print(list_user)
+                list_user.is_deleted = True
+                list_user.save()
+
+                return redirect('app:admin-dashboard')
+
             # Remove Event
+            elif 'btnRemoveEvent' in request.POST:
+                list_event_id = request.POST.get('list_event_id')
+                list_event = Event.objects.get(id=list_event_id)
+                print(list_event_id)
+                print(list_event)
+                list_event.is_deleted = True
+                list_event.save()
+
+                return redirect('app:admin-dashboard')
+            
+            else:
+                print('else')

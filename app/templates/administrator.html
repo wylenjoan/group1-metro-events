@@ -115,15 +115,19 @@
                               </tr>
                             </thead>
                             <tbody>
-                              {% for user in users %}
+                              {% for regular_user in users %}
                               <tr>
-                                <td>{{ user.user_id.first_name }}</td>
-                                <td>{{ user.user_id.last_name }}</td>
-                                <td>{{ user.user_id.email }}</td>
-                                <td>{{ user.user_id.username }}</td>
-                                <td>{{ user.gender }}</td>
+                                <td>{{ regular_user.user_id.first_name }}</td>
+                                <td>{{ regular_user.user_id.last_name }}</td>
+                                <td>{{ regular_user.user_id.email }}</td>
+                                <td>{{ regular_user.user_id.username }}</td>
+                                <td>{{ regular_user.gender }}</td>
                                 <td>
-                                  <button type="submit" class="btn btn-danger"> <i class="fa fa-trash"></i> Remove</button>
+                                  <form action="{% url 'app:admin-dashboard' %}" method="post">
+                                    {% csrf_token %} 
+                                    <input name="list_user_id" id="list_user_id"  value="{{regular_user.id}}">
+                                    <button type="submit" class="btn btn-danger" name="btnRemoveUser" id="btnRemoveUser"> <i class="fa fa-trash"></i> Remove</button>
+                                  </form>
                               </tr>
                               {% endfor %}
                             </tbody>
@@ -159,7 +163,11 @@
                               <td>{{event.street}}</td>
                               <td>{{event.city}}</td>
                               <td>
-                                <button type="submit" class="btn btn-danger"> <i class="fa fa-trash"></i> Remove</button>
+                                <form action="{% url 'app:admin-dashboard' %}" method="post">
+                                  {% csrf_token %} 
+                                  <input name="list_event_id" id="list_event_id"  value="{{event.id}}">
+                                  <button type="submit" class="btn btn-danger" name="btnRemoveEvent" id="btnRemoveEvent"> <i class="fa fa-trash"></i> Remove</button>
+                                </form>
                             </tr>
                             {% endfor %}
                           </tbody>
