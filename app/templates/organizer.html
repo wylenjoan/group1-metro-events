@@ -212,12 +212,12 @@
                 <form class="form" action="{% url 'app:organizer-dashboard' %}" method="post">
                   {% csrf_token %}
                   <tr>
-                    <td><input type="text" name="join_request_id" id="join_request_id" value={{join_request.id}}></td>
+                    <td><input type="text" name="join_request_id" id="join_request_id" value={{join_request.id}} hidden></td>
                     <td>{{ join_request.user_id.user_id.first_name }} {{ join_request.user_id.user_id.last_name }}</td>
                     <td>{{ join_request.event_id.title }}</td>
                     <td>
                       <button type="submit" class="btn btn-success" name="btnAcceptRequest" id="btnAcceptRequest"> <i class="fa fa-check"></i> Accept</button>
-                      <!-- <button type="button" class="btn btn-danger"><i class="fa fa-ban"></i> Decline</button> -->
+                      <button type="submit" class="btn btn-danger" name="btnDeclineRequest" id="btnDeclineRequest"><i class="fa fa-ban"></i> Decline</button>
                     </td>
                   </tr>
                 </form>
