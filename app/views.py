@@ -86,16 +86,17 @@ class UserDashboardView(View):
         if request.method == 'POST':
             if 'btnJoinEvent' in request.POST:
                 event_id = request.POST.get('event_id')
-                request = Request.objects.create(request_type = 'join_event', user_id = regular_user, event_id=event_id, is_approved = False,)
+                event = Event.objects.get(id=event_id)
+                request_ = Request.objects.create(request_type = 'join_event', user_id = regular_user, event_id=event, is_approved = False,)
                 return redirect('app:user-dashboard')
 
             elif 'btnApplyOrganizer' in request.POST:
-                request = Request.objects.create(request_type = 'upgrade', user_id = regular_user, user_type = 'organizer', is_approved = False,)
+                request_ = Request.objects.create(request_type = 'upgrade', user_id = regular_user, user_type = 'organizer', is_approved = False,)
                 
                 return redirect('app:user-dashboard')
 
             elif 'btnApplyAdmin' in request.POST:
-                request = Request.objects.create(request_type = 'upgrade', user_id = regular_user, user_type = 'admin', is_approved = False,)
+                request_ = Request.objects.create(request_type = 'upgrade', user_id = regular_user, user_type = 'admin', is_approved = False,)
                 
                 return redirect('app:user-dashboard')
 
@@ -156,3 +157,45 @@ class AdminDashboardView(View):
             'users': users,
         }
         return render(request, 'administrator.html', context)
+
+    def post(self, request):
+        user = request.user
+        regular_user = RegularUser.objects.get(user_id=user)
+
+        if request.method == 'POST':
+            # Accept Upgrade Requests (btnAcceptUpgrade)
+            if 'btnAcceptUpgrade' in request.POST:
+                upgrade_request_id = request.POST.get('upgrade_request_id')
+                upgrade_request = Request.objects.get(id=upgrade_request_id)
+                upgrade_request.is_approved = True
+                upgrade_request.save()
+
+                if upgrade_request.user_type == 'organizer':
+                    request_user = upgrade_request.user_id
+                    request_user.is_organizer = True
+                    request_user.save()
+                    organizer = OrganizerUser.objects.create(regular_user_id = request_user)
+                
+                else:
+                    request_user = upgrade_request.user_id
+                    request_user.is_admin = True
+                    request_user.save()
+                    admin = AdministratorUser.objects.create(regular_user_id = request_user)
+                
+                return redirect('app:admin-dashboard')
+            
+            # Accept Create Event Requests (btnAcceptCreateEvent)
+            elif 'btnAcceptCreateEvent' in request.POST:
+                event_request_id = request.POST.get('event_request_id')
+                event_request = Request.objects.get(id=event_request_id)
+                event_request.is_approved = True
+                event_request.save()
+
+                event = event_request.event_id
+                event.is_approved = True
+                event.save()
+
+                return redirect('app:admin-dashboard')
+
+            # Remove User
+            # Remove Event
