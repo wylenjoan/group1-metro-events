@@ -180,6 +180,15 @@ class OrganizerDashboardView(View):
 
                 return redirect('app:organizer-dashboard')
 
+            elif 'btnDeclineRequest' in request.POST:
+                join_request_id = request.POST.get('join_request_id')
+                join_request = Request.objects.get(id=join_request_id)
+                join_request.status = 'declined'
+                join_request.save()
+
+                return redirect('app:organizer-dashboard')
+
+
             
 class AdminDashboardView(View):
     def get(self, request):
@@ -230,6 +239,14 @@ class AdminDashboardView(View):
                 
                 return redirect('app:admin-dashboard')
             
+            # Decline Upgrade Requests (btnAcceptUpgrade)
+            elif 'btnDeclineUpgrade' in request.POST:
+                upgrade_request_id = request.POST.get('upgrade_request_id')
+                upgrade_request = Request.objects.get(id=upgrade_request_id)
+                upgrade_request.status = 'declined'
+                upgrade_request.save()
+                return redirect('app:admin-dashboard')
+            
             # Accept Create Event Requests (btnAcceptCreateEvent)
             elif 'btnAcceptCreateEvent' in request.POST:
                 event_request_id = request.POST.get('event_request_id')
@@ -240,6 +257,15 @@ class AdminDashboardView(View):
                 event = event_request.event_id
                 event.status = 'approved'
                 event.save()
+
+                return redirect('app:admin-dashboard')
+
+            # Decline Create Event Requests (btnAcceptCreateEvent)
+            elif 'btnDeclineCreateEvent' in request.POST:
+                event_request_id = request.POST.get('event_request_id')
+                event_request = Request.objects.get(id=event_request_id)
+                event_request.status = 'declined'
+                event_request.save()
 
                 return redirect('app:admin-dashboard')
 

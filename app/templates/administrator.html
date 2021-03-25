@@ -48,6 +48,7 @@
                                   {% csrf_token %} 
                                   <input name="upgrade_request_id" id="upgrade_request_id"  value="{{upgrade_request.id}}" hidden>
                                   <button type="submit" class="btn btn-success" id="btnAcceptUpgrade" name="btnAcceptUpgrade"> <i class="fa fa-check"></i> Accept</button>
+                                  <button type="submit" class="btn btn-danger" name="btnDeclineUpgrade" id="btnDeclineUpgrade"><i class="fa fa-ban"></i> Decline</button>
                                 </form>
                               </td>
                             </tr>
@@ -86,6 +87,7 @@
                                     {% csrf_token %} 
                                     <input name="event_request_id" id="event_request_id"  value="{{event_request.id}}" hidden>
                                     <button type="submit" class="btn btn-success" id="btnAcceptCreateEvent" name="btnAcceptCreateEvent"> <i class="fa fa-check"></i> Accept</button>
+                                    <button type="submit" class="btn btn-danger" name="btnDeclineCreateEvent" id="btnDeclineCreateEvent"><i class="fa fa-ban"></i> Decline</button>
                                   </form>
                                  </td>
                               </tr>
