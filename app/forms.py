@@ -1,6 +1,3 @@
-# Date Started: March 20, 2021
-# Author/s: Wylen Joan Lee
-
 # References:
 # 
 
@@ -18,8 +15,3 @@ class UserRegistrationForm(forms.ModelForm):
     class Meta:
         model = RegularUser
         fields = ['user_id','gender','is_organizer','is_admin']
-
-class EventsForm(forms.ModelForm):
-	class Meta:
-		model = Event        
-		fields = ['title','description','event_type','is_approved','upvotes_count','street','city','province']        
