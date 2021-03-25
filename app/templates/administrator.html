@@ -165,7 +165,7 @@
                               <td>
                                 <form action="{% url 'app:admin-dashboard' %}" method="post">
                                   {% csrf_token %} 
-                                  <input name="list_event_id" id="list_event_id"  value="{{event.id}}">
+                                  <input name="list_event_id" id="list_event_id"  value="{{event.id}}" hidden>
                                   <button type="submit" class="btn btn-danger" name="btnRemoveEvent" id="btnRemoveEvent"> <i class="fa fa-trash"></i> Remove</button>
                                 </form>
                             </tr>
