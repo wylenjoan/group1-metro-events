@@ -49,21 +49,60 @@
                   <td>{{event.description}}</td>
                   <td>{{event.event_type}}</td>
                   
-                  {% if event.is_approved == True %}
+                  {% if event.status == 'approved' %}
                   <td>Approved</td>
                   {% endif %}
-                  {% if event.is_approved == False %}
+                  {% if event.status == 'pending' %}
                   <td>Pending</td>
+                  {% endif %}
+                  {% if event.status == 'declined' %}
+                  <td>Declined</td>
                   {% endif %}
 
                   <td>{{event.street}}</td>
                   <td>{{event.city}}</td>
                   <td>{{event.province}}</td>
                   <td>
+                    <button type="button" class="btn btn-warning" data-toggle="modal" data-target="#participantsmodal-{{event.id}}" name="showParticipants" id="showParticipants"><i class="fa fa-pen"></i> Participants</button>
                     <button type="button" class="btn btn-primary" data-toggle="modal" data-target="#updatemodal-{{event.id}}"><i class="fa fa-pen"></i> Update</button>
                     <button type="button" class="btn btn-danger" id="btnDeleteEvent" name="btnDeleteEvent"><i class="fa fa-trash"></i> Delete</button>
                   </td>
                 </tr>
+
+                  <!-- Event Update Modal -->
+                  <div class="modal fade" id="participantsmodal-{{event.id}}" tabindex="-1" role="dialog" aria-labelledby="participantsmodal" aria-hidden="true">
+                    <div class="modal-dialog" role="document">
+                      <div class="modal-content">
+                        <div class="modal-header">
+                          <h5 class="modal-title" id="participantsmodal"> Participants List </h5>
+                          <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+                        </div>
+
+                        <div class="modal-body">
+                            <input type="text" name="event_id" id="event_id" value={{event.id}} hidden>
+                            <div class="form-group">
+                              <div class="col-lg-12">
+                                {% for participant in event.participants.all %}
+                                <div class="col-xs-6">
+                                  <input type="text" class="form-control" value="{{participant.user_id.first_name}}" readonly>
+                                </div>
+                                <div class="col-xs-6">
+                                  <input type="text" class="form-control" value="{{participant.user_id.last_name}}" readonly>
+                                </div>
+                                <br>
+                                {% endfor %}
+
+                              </div>
+                            </div>
+
+                            <div class="modal-footer">
+                              <button type="button" class="btn btn-danger" data-dismiss="modal">Close</button>
+                            </div>
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+                  <!---End of Event Update Modal-->
                 
                   <!-- Event Update Modal -->
                   <div class="modal fade" id="updatemodal-{{event.id}}" tabindex="-1" role="dialog" aria-labelledby="updatemodal" aria-hidden="true">
