@@ -1,6 +1,3 @@
-# Date Started: March 20, 2021
-# Author/s: Wylen Joan Lee
-
 # References:
 # 
 

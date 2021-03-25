@@ -125,7 +125,7 @@
                                 <td>
                                   <form action="{% url 'app:admin-dashboard' %}" method="post">
                                     {% csrf_token %} 
-                                    <input name="list_user_id" id="list_user_id"  value="{{regular_user.id}}">
+                                    <input name="list_user_id" id="list_user_id"  value="{{regular_user.id}}" hidden>
                                     <button type="submit" class="btn btn-danger" name="btnRemoveUser" id="btnRemoveUser"> <i class="fa fa-trash"></i> Remove</button>
                                   </form>
                               </tr>
