@@ -2,250 +2,232 @@
 {% load static %}
 {% block content %}
 <div class="container">
-    <!-- Buttons-->
-    <h1>Organizer Dashboard</h1>
-    <br>
-    <ul class="nav nav-tabs">
-          <li class="nav-item">
-              <a href="#EventsList" class="nav-link" data-toggle="tab">Events List</a>
-          </li>
-          <li class="nav-item">
-              <a href="#JoinRequest" class="nav-link" data-toggle="tab">Join Request</a>
-          </li>
-    </ul>
-    <br>
-    <br>
-    <div class="tab-content">
-          <!--Events Collapse Table-->
-           <div class="tab-pane fade" id="EventsList">
-              <div class="card mb-4">
-                <div class="card-header"><i class="fa fa-list mr-1"></i> Events List </div>
-                    <div class="card-body">
-                      <div class="table-responsive">
-                        <table class="table">
-                            <p align="left"><a type = "button" class="btn btn-white" data-toggle="modal" data-target="#addmodal"><i class="fa fa-plus"></i> Add Event</a></p>
-                          <thead>
-                            <tr>
-                              <th>Title</th>
-                              <th>Description</th>
-                              <th></th>
-                            </tr>
-                          </thead>
-                          <tbody>
-                            <tr>
-                              <td>Title</td>
-                              <td>Description</td>
-                              <td>
-                                <button type="submit" class="btn btn-primary" data-toggle="modal" data-target="#viewmodal"><i class="fa fa-eye"></i> View</button>
-                                <button type="submit" class="btn btn-dark" data-toggle="modal" data-target="#updatemodal"><i class="fa fa-pencil"></i> Update</button>
-                                <button type="button" class="btn btn-danger"><i class="fa fa-trash"></i> Delete</button>
-                              </td>
-                            </tr>
-                          </tbody>
-                        </table>
+  <!-- Buttons-->
+  <h1>Organizer Dashboard</h1>
+  <br>
+  <ul class="nav nav-tabs">
+    <li class="nav-item">
+      <a href="#EventsList" class="nav-link" data-toggle="tab">Events List</a>
+    </li>
+    <li class="nav-item">
+      <a href="#JoinRequest" class="nav-link" data-toggle="tab">Join Request</a>
+    </li>
+  </ul>
+  <br>
+  <br>
+  <div class="tab-content">
+    <!--Events Collapse Table-->
+    <div class="tab-pane fade" id="EventsList">
+      <div class="card mb-4">
+        <div class="card-header"><i class="fa fa-list mr-1"></i> Events List </div>
+        <div class="card-body">
+          <div class="table-responsive">
+            <table class="table">
+              <p align="left"><a type = "button" class="btn btn-white" data-toggle="modal" data-target="#addmodal"><i class="fa fa-plus"></i> Add Event</a></p>
+              <thead>
+                <tr>
+                  <th></th>
+                  <th>Title</th>
+                  <th>Description</th>
+                  <th>Event Type</th>
+                  <th>Status</th>
+                  <th>Street</th>
+                  <th>City</th>
+                  <th>Province</th>
+                  <th></th>
+                </tr>
+              </thead>
+
+              <tbody>
+              {% for event in events %}
+              <form action="{% url 'app:organizer-dashboard' %}" method="post">
+                {% csrf_token %} 
+              
+                <tr>
+                  <td><input type="text" name="event_id" id="event_id" value={{event.id}} hidden></td>
+                  <td>{{event.title}}</td>
+                  <td>{{event.description}}</td>
+                  <td>{{event.event_type}}</td>
+                  
+                  {% if event.is_approved == True %}
+                  <td>Approved</td>
+                  {% endif %}
+                  {% if event.is_approved == False %}
+                  <td>Pending</td>
+                  {% endif %}
+
+                  <td>{{event.street}}</td>
+                  <td>{{event.city}}</td>
+                  <td>{{event.province}}</td>
+                  <td>
+                    <button type="button" class="btn btn-primary" data-toggle="modal" data-target="#updatemodal-{{event.id}}"><i class="fa fa-pen"></i> Update</button>
+                    <button type="button" class="btn btn-danger" id="btnDeleteEvent" name="btnDeleteEvent"><i class="fa fa-trash"></i> Delete</button>
+                  </td>
+                </tr>
+                
+                  <!-- Event Update Modal -->
+                  <div class="modal fade" id="updatemodal-{{event.id}}" tabindex="-1" role="dialog" aria-labelledby="updatemodal" aria-hidden="true">
+                    <div class="modal-dialog" role="document">
+                      <div class="modal-content">
+                        <div class="modal-header">
+                          <h5 class="modal-title" id="updatemodal"> Update Details </h5>
+                          <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+                        </div>
+
+                        <div class="modal-body">
+                            <input type="text" name="event_id" id="event_id" value={{event.id}} hidden>
+                            <div class="form-group">
+                              <div class="col-lg-12">
+
+                                <div class="col-xs-4">
+                                  <label for="title"><h5>Title</h5></label>
+                                  <input type="text" class="form-control" name="update_event_title" id="update_event_title" placeholder="Title" value="{{event.title}}">
+                                </div>
+
+                                <div class="col-xs-4">
+                                  <label for="description"><h5>Description</h5></label>
+                                  <input type="text" class="form-control" name="update_event_description" id="update_event_description" placeholder="Description" value="{{event.description}}">
+                                </div>
+
+                                <div class="col-xs-4">
+                                  <label for="eventType"><h5>Event Type</h5></label>
+                                  <input type="text" class="form-control" name="update_event_eventType" id="update_event_eventType" placeholder="Event Type" value="{{event.event_type}}">
+                                </div>
+                                
+                                <div class="col-xs-4">
+                                  <label for="street"><h5>Street</h5></label>
+                                  <input type="text" class="form-control" name="update_event_street" id="update_event_street" placeholder="Street" value="{{event.street}}">
+                                </div>
+
+                                <div class="col-xs-4">
+                                  <label for="city"><h5>City</h5></label>
+                                  <input type="text" class="form-control" name="update_event_city" id="update_event_description" placeholder="City" value="{{event.city}}">
+                                </div>
+                                
+                                <div class="col-xs-4">
+                                  <label for="province"><h5>Province</h5></label>
+                                  <input type="text" class="form-control" name="update_event_province" id="update_event_province" placeholder="Province" value="{{event.province}}">
+                                </div>
+
+                              </div>
+                            </div>
+
+                            <div class="modal-footer">
+                              <button type="submit" id="btnUpdateEvent" name="btnUpdateEvent" class="btn btn-primary">Update</button>
+                              <button type="button" class="btn btn-danger" data-dismiss="modal">Cancel</button>
+                            </div>
+                        </div>
                       </div>
                     </div>
-            <!--End of Events Collapse Table-->
-            <!-- Add Event -->
-              <div class="modal fade" id="addmodal" tabindex="-1" role="dialog" aria-labelledby="addmodal" aria-hidden="true">
-                <div class="modal-dialog" role="document">
-                  <div class="modal-content">
-                    <div class="modal-header">
-                      <h5 class="modal-title" id="addmodal"> Add Event</h5>
-                      <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-                        <span aria-hidden="true">&times;</span>
-                      </button>
-                    </div>
-                    <div class="modal-body">
-                        <form class="form" action="##" method="post" id="registrationForm">
-                          <div class="form-group">
-                              <div class="col-lg-12">
-                                  <div class="col-xs-4">
-                                              <label for="title"><h5>Title</h5></label>
-                                              <input type="text" class="form-control" name="title" id="title" placeholder="Title">
-                                  </div>
-                                  <div class="col-xs-4">
-                                              <label for="description"><h5>Description</h5></label>
-                                              <input type="text" class="form-control" name="description" id="description" placeholder="Description">
-                                  </div>
-                                  <div class="col-xs-4">
-                                              <label for="eventType"><h5>Event Type</h5></label>
-                                              <input type="text" class="form-control" name="eventType" id="eventType" placeholder="Event Type">
-                                  </div>
-                              </div>
-                              <div class="col-xs-6">
-                                          <label for="street"><h5>Street</h5></label>
-                                          <input type="text" class="form-control" name="street" id="street" placeholder="Street">
-                              </div>
-                              <div class="col-xs-6">
-                                          <label for="city"><h5>City</h5></label>
-                                          <input type="text" class="form-control" name="city" id="city" placeholder="City">
-                              </div>
-                              <div class="col-xs-6">
-                                          <label for="province"><h5>Province</h5></label>
-                                          <input type="text" class="form-control" name="province" id="province" placeholder="Province">
-                              </div>
-                              <!-- <div class="col-xs-6">
-                                          <label for="startDate"><h5>Start Date</h5></label>
-                                          <input type="date" class="form-control" name="startDate" id="startDate" placeholder="Start Date">
-                              </div>
-                              <div class="col-xs-6">
-                                          <label for="endDate"><h5>End Date</h5></label>
-                                          <input type="date" class="form-control" name="endDate" id="endDate" placeholder="End Date">
-                              </div>
-                              <div class="col-xs-6">
-                                          <label for="startTime"><h5>Start Time</h5></label>
-                                          <input type="time" class="form-control" name="startTime" id="startTime" placeholder="Start Time">
-                              </div>
-                              <div class="col-xs-6">
-                                          <label for="endTime"><h5>End Time</h5></label>
-                                          <input type="time" class="form-control" name="endTime" id="endTime" placeholder="End Time">
-                              </div> -->
-                          </div>
-                        </form> 
-                    </div>
-                    <div class="modal-footer">
-                      <button type="submit" class="btn btn-primary">Add</button>
-                      <button type="button" class="btn btn-danger" data-dismiss="modal">Close</button>
-                    </div>
                   </div>
-                </div>
-              </div>
-               <!---End of Add Event -->
-
-              <!-- View Event -->
-              <div class="modal fade" id="viewmodal" tabindex="-1" role="dialog" aria-labelledby="viewmodal" aria-hidden="true">
-                <div class="modal-dialog" role="document">
-                  <div class="modal-content">
-                    <div class="modal-header">
-                      <h5 class="modal-title" id="viewmodal"> Event Details </h5>
-                      <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-                        <span aria-hidden="true">&times;</span>
-                      </button>
-                    </div>
-                    <div class="modal-body">
-                        <form class="form" action="##" method="post" id="registrationForm">
-                          <div class="form-group">
-                            <div class="form-inline justify-content-center">
-                                    <div class="col-xs-6">
-                                          <label for="eventType"><h5>Event Type</h5></label>
-                                          <input type="text" class="form-control" name="eventType" id="eventType" placeholder="Event Type">
-                                    </div>
-                                    
-                            </div>
-                            <!-- <div class="col-xs-6">
-                                          <label for="startDate"><h5>Start Date</h5></label>
-                                          <input type="date" class="form-control" name="startDate" id="startDate" placeholder="Start Date">
-                            </div>
-                            <div class="col-xs-6">
-                                          <label for="endDate"><h5>End Date</h5></label>
-                                          <input type="date" class="form-control" name="endDate" id="endDate" placeholder="End Date">
-                            </div>
-                            <div class="col-xs-6">
-                                          <label for="startTime"><h5>Start Time</h5></label>
-                                          <input type="time" class="form-control" name="startTime" id="startTime" placeholder="Start Time">
-                            </div>
-                            <div class="col-xs-6">
-                                          <label for="endTime"><h5>End Time</h5></label>
-                                          <input type="time" class="form-control" name="endTime" id="endTime" placeholder="End Time">
-                            </div> -->
-                          </div>
-                        </form>
-                    </div>
-                    <div class="modal-footer">
-                      <button type="button" class="btn btn-danger" data-dismiss="modal">Close</button>
-                    </div>
-                  </div>
-                </div>
-              </div>
-              <!---End of View Event-->
-
-              <!-- Event Update -->
-              <div class="modal fade" id="updatemodal" tabindex="-1" role="dialog" aria-labelledby="updatemodal" aria-hidden="true">
-                <div class="modal-dialog" role="document">
-                  <div class="modal-content">
-                    <div class="modal-header">
-                      <h5 class="modal-title" id="updatemodal"> Update Details </h5>
-                      <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-                        <span aria-hidden="true">&times;</span>
-                      </button>
-                    </div>
-                    <div class="modal-body">
-                        <form class="form" action="##" method="post" id="registrationForm">
-                          <div class="form-group">
-                              <div class="col-lg-12">
-                                  <div class="col-xs-4">
-                                              <label for="title"><h5>Title</h5></label>
-                                              <input type="text" class="form-control" name="title" id="title" placeholder="Title">
-                                  </div>
-                                  <div class="col-xs-4">
-                                              <label for="description"><h5>Description</h5></label>
-                                              <input type="text" class="form-control" name="description" id="description" placeholder="Description">
-                                  </div>
-                                  <div class="col-xs-4">
-                                              <label for="eventType"><h5>Event Type</h5></label>
-                                              <input type="text" class="form-control" name="eventType" id="eventType" placeholder="Event Type">
-                                  </div>
-                              </div>
-                              <!-- <div class="col-xs-6">
-                                          <label for="startDate"><h5>Start Date</h5></label>
-                                          <input type="date" class="form-control" name="startDate" id="startDate" placeholder="Start Date">
-                              </div>
-                              <div class="col-xs-6">
-                                          <label for="endDate"><h5>End Date</h5></label>
-                                          <input type="date" class="form-control" name="endDate" id="endDate" placeholder="End Date">
-                              </div>
-                              <div class="col-xs-6">
-                                          <label for="startTime"><h5>Start Time</h5></label>
-                                          <input type="time" class="form-control" name="startTime" id="startTime" placeholder="Start Time">
-                              </div>
-                              <div class="col-xs-6">
-                                          <label for="endTime"><h5>End Time</h5></label>
-                                          <input type="time" class="form-control" name="endTime" id="endTime" placeholder="End Time">
-                              </div> -->
-                          </div>
-                        </form> 
-                    </div>
-                    <div class="modal-footer">
-                      <button type="submit" class="btn btn-primary">Add</button>
-                      <button type="button" class="btn btn-danger" data-dismiss="modal">Close</button>
-                    </div>
-                  </div>
-                </div>
-              </div>
-              <!---End of Event Update-->
+                  <!---End of Event Update Modal-->
+              </form>
+              {% endfor %}
+              </tbody>
+            </table>
           </div>
         </div>
-
-        <!--JoinRequest Collapse Table-->
-        <div class="tab-pane fade" id="JoinRequest">
-          <div class="card mb-4">
-            <div class="card-header"><i class="fa fa-plus-square"></i> Join Request </div>
-              <div class="card-body">
-                <div class="table-responsive">
-                  <table class="table">
-                    <thead>
-                      <tr>
-                        <th>Name</th>
-                        <th>Event</th>
-                      </tr>
-                    </thead>
-                    <tbody>
-                      <tr>
-                        <td>Name</td>
-                        <td>Event</td>
-                        <td>
-                          <button type="submit" class="btn btn-success"> <i class="fa fa-check"></i> Accept</button>
-                          <button type="button" class="btn btn-danger"><i class="fa fa-ban"></i> Decline</button>
-                        </td>
-                      </tr>
-                    </tbody>
-                  </table>
-                </div>
+        
+        <!-- Add Event -->
+        <div class="modal fade" id="addmodal" tabindex="-1" role="dialog" aria-labelledby="addmodal" aria-hidden="true">
+          <div class="modal-dialog" role="document">
+            <div class="modal-content">
+              <div class="modal-header">
+                <h5 class="modal-title" id="addmodal"> Add Event</h5>
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
               </div>
+              
+              <div class="modal-body">
+                <form class="form" action="{% url 'app:organizer-dashboard' %}" method="post" id="createEventForm">
+                {% csrf_token %}
+                  <div class="form-group">
+                    <div class="col-lg-12">
+                      
+                      <div class="col-xs-4">
+                        <label for="title"><h5>Title</h5></label>
+                        <input type="text" class="form-control" name="create_event_title" id="create_event_title" placeholder="Title">
+                      </div>
+
+                      <div class="col-xs-4">
+                        <label for="description"><h5>Description</h5></label>
+                        <input type="text" class="form-control" name="create_event_description" id="create_event_description" placeholder="Description">
+                      </div>
+
+                      <div class="col-xs-4">
+                        <label for="eventType"><h5>Event Type</h5></label>
+                        <input type="text" class="form-control" name="create_event_eventType" id="create_event_eventType" placeholder="Event Type">
+                      </div>
+
+                      <div class="col-xs-4">
+                        <label for="street"><h5>Street</h5></label>
+                        <input type="text" class="form-control" name="create_event_street" id="create_event_street" placeholder="Street">
+                      </div>
+
+                      <div class="col-xs-4">
+                        <label for="city"><h5>City</h5></label>
+                        <input type="text" class="form-control" name="create_event_city" id="create_event_city" placeholder="City">
+                      </div>
+
+                      <div class="col-xs-4">
+                        <label for="province"><h5>Province</h5></label>
+                        <input type="text" class="form-control" name="create_event_province" id="create_event_province" placeholder="Province">
+                      </div>
+                      <br>
+                    </div>
+                  </div>
+
+                  <div class="modal-footer">
+                    <button type="submit" class="btn btn-primary" id="btnCreateEvent" name="btnCreateEvent">Add</button>
+                    <button type="button" class="btn btn-danger" data-dismiss="modal">Close</button>
+                  </div> 
+                </form>
+              </div>
+
             </div>
           </div>
         </div>
+        <!---End of Add Event -->
+      </div>
     </div>
+    <!--End of Events Collapse Table-->
+
+    <!--Join Request Collapse Table-->
+    <div class="tab-pane fade" id="JoinRequest">
+      <div class="card mb-4">
+        <div class="card-header"><i class="fa fa-plus-square"></i> Join Request </div>
+        <div class="card-body">
+          <div class="table-responsive">
+            <table class="table">
+              <thead>
+                <tr>
+                  <th></th>
+                  <th>User's Full Name</th>
+                  <th>Event Title</th>
+                  <th></th>
+                </tr>
+              </thead>
+
+              <tbody>
+                {% for join_request in join_requests %}
+                <form class="form" action="{% url 'app:organizer-dashboard' %}" method="post">
+                  {% csrf_token %}
+                  <tr>
+                    <td><input type="text" name="join_request_id" id="join_request_id" value={{join_request.id}}></td>
+                    <td>{{ join_request.user_id.user_id.first_name }} {{ join_request.user_id.user_id.last_name }}</td>
+                    <td>{{ join_request.event_id.title }}</td>
+                    <td>
+                      <button type="submit" class="btn btn-success" name="btnAcceptRequest" id="btnAcceptRequest"> <i class="fa fa-check"></i> Accept</button>
+                      <!-- <button type="button" class="btn btn-danger"><i class="fa fa-ban"></i> Decline</button> -->
+                    </td>
+                  </tr>
+                </form>
+                {% endfor %}
+              </tbody>
+            </table>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
 </div>
 {% endblock content %}

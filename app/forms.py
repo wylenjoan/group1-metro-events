@@ -1,11 +1,8 @@
-# Date Started: March 20, 2021
-# Author/s: Wylen Joan Lee
-
 # References:
 # 
 
 from django import forms
-from .models import RegularUser
+from .models import RegularUser, Event
 from django.contrib.auth.models import User
 
 

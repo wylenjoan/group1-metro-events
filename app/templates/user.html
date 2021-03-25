@@ -10,136 +10,175 @@
 </head>
 {% block content %}
 <body>
-    <div class="container">
+  <div class="container">
     <h1>Hello, {{user.first_name}} {{user.last_name}}!</h1>
     <br>
     <ul class="nav nav-tabs">
-          <li class="nav-item">
-              <a href="#events" class="nav-link" data-toggle="tab">Events</a>
-          </li>
-          <li class="nav-item">
-              <a href="#profile" class="nav-link" data-toggle="tab">Profile</a>
-          </li>
+      <li class="nav-item">
+        <a href="#events" class="nav-link" data-toggle="tab">Available Events</a>
+      </li>
+      <li class="nav-item">
+        <a href="#joined_events" class="nav-link" data-toggle="tab">Joined Events</a>
+      </li>
+      <li class="nav-item">
+        <a href="#profile" class="nav-link" data-toggle="tab">Profile</a>
+      </li>
     </ul>
     <br>
-    <!--Events Collapse Table-->
-      <div class="tab-content">
-          <div class="tab-pane fade" id="events">
-            <div class="card mb-4">
-                <div class="card-header"><i class="fa fa-calendar mr-1"></i> Event</div>
-                    <div class="card-body">
-                        <div class="table-responsive">
-                            <table class="table" >
-                                <thead>
-                                  <tr>
-                                    <th>Title</th>
-                                    <th>Description</th>
-                                    <th>Event Type</th>
-                                    <!-- <th>Start</th>
-                                    <th>End</th> -->
-                                    <th>Street</th>
-                                    <th>City</th>
-                                    <th></th>
-                                  </tr>
-                                </thead>
-                                <tbody>
-                                  {% for event in events %}
-                                  <tr>
-                                    <td>{{event.title}}</td>
-                                    <td>{{event.description}}</td>
-                                    <td>{{event.event_type}}</td>
-                                    <!-- <td>{{event.start_datetime}}</td>
-                                    <td>{{event.end_datetime}}</td> -->
-                                    <td>{{event.street}}</td>
-                                    <td>{{event.city}}</td>
-                                    <td>
-                                      <form action="{% url 'app:user-dashboard' %}" method="post">
-                                        {% csrf_token %}
-                                        <button type="submit" class="btn btn-success" name="btnJoinEvent" id="btnJoinEvent"> <i class="fa fa-check"></i> Join</button>
-                                      </form>
-                                    </td>
-                                  </tr>
-                                  {% endfor %}
-                                </tbody>
-                            </table>
-                        </div>
-                    </div>
+  
+    <div class="tab-content">
+
+      <!--Events Collapse Table-->
+      <div class="tab-pane fade" id="events">
+        <div class="card mb-4">
+          <div class="card-header"><i class="fa fa-calendar mr-1"></i> Available Events</div>
+          <div class="card-body">
+            <div class="table-responsive">
+              <table class="table" >
+                <thead>
+                  <tr>
+                    <th>Title</th>
+                    <th>Description</th>
+                    <th>Event Type</th>
+                    <th>Street</th>
+                    <th>City</th>
+                    <th></th>
+                  </tr>
+                </thead>
+                <tbody>
+                {% for event in events %}
+                  <tr>
+                    <td>{{event.title}}</td>
+                    <td>{{event.description}}</td>
+                    <td>{{event.event_type}}</td>
+                    <td>{{event.street}}</td>
+                    <td>{{event.city}}</td>
+                    <td>
+                      <form action="{% url 'app:user-dashboard' %}" method="post">
+                      {% csrf_token %}
+                        <input hidden name="event_id" id="event_id"  value="{{event.id}}">
+                        <button type="submit" class="btn btn-success" name="btnJoinEvent" id="btnJoinEvent"> <i class="fa fa-check"></i> Join</button>
+                      </form>
+                    </td>
+                  </tr>
+                {% endfor %}
+                </tbody>
+              </table>
             </div>
           </div>
-        <!--Profile Collapse Table-->
-            <div class="tab-pane fade" id="profile">
-                <div class="card mb-4" >
-                        <div class="card-header"><i class="fa fa-user mr-1"></i> Profile</div>
-                        <div class="card-body" >
-                            <div class="table-responsive">
-                                <form action="{% url 'app:user-dashboard' %}" method="POST" id="userProfileForm" enctype="multipart/form-data">
-                                    {% csrf_token %}
-                                      <div class="form-group"> 
-                                          <div class="col-xs-6">
-                                              <label for="first_name"><h4>First name</h4></label>
-                                              <input type="text" class="form-control" name="first_name" id="first_name" placeholder="first name" value="{{user.first_name}}" readonly>
-                                          </div>
-                                      </div>
-                                      <div class="form-group">
-                                          
-                                          <div class="col-xs-6">
-                                            <label for="last_name"><h4>Last name</h4></label>
-                                              <input type="text" class="form-control" name="last_name" id="last_name" placeholder="last name" value="{{user.last_name}}" readonly>
-                                          </div>
-                                      </div>
-                                      <div class="form-group">
-                                          <div class="col-xs-6">
-                                              <label for="gender"><h4>Gender</h4></label>
-                                                <select class="form-control" id="gender" name="gender" value="{{regular_user.gender}}" readonly>
-                                                  {% if regular_user.gender == 'Male'%}
-                                                  <option selected>Male</option>
-                                                  <option>Female</option>
-                                                  {% endif %}
-                                                  {% if regular_user.gender == 'Female'%}
-                                                  <option>Male</option>
-                                                  <option selected>Female</option>
-                                                  {% endif %}
-                                                </select>
-                                          </div>
-                                      </div>
-
-                                      <div class="form-group">
-                                        <div class="col-xs-6">
-                                            <label for="username"><h4>Username</h4></label>
-                                            <input type="text" class="form-control" name="username" id="username" value="{{user.username}}" readonly>
-                                        </div>
-                                      </div>
-
-                                      <div class="form-group">
-                                          <div class="col-xs-6">
-                                              <label for="email"><h4>Email</h4></label>
-                                              <input type="email" class="form-control" name="email" id="email" value="{{user.email}}" readonly>
-                                          </div>
-                                      </div>
-                                     
-                                      <div class="form-group">
-                                          <div class="col-xs-6">
-                                              <label for="password"><h4>Password</h4></label>
-                                              <input type="password" class="form-control" name="password" id="password" value="{{user.password}}" hidden>
-                                          </div>
-                                      </div>
-                                      <input type="text" class="form-control" name="user_id" id="user_id" placeholder="first name" value="{{user}}" hidden>
-                                      <div class="form-group">
-                                           <div class="col-xs-12">
-                                                <br>
-                                                <button class="btn btn-success" type="submit" id="btnApplyOrganizer" name="btnApplyOrganizer">Apply as Organizer</button>
-                                                <button class="btn btn-warning" type="submit" id="btnApplyAdmin" name="btnApplyAdmin">Apply as Administrator</button>
-                                                <!-- <button class="btn btn-primary" type="submit" id="btnUpdateUser" name="btnUpdateUser">Update</button> -->
-                                                <!-- <button class="btn btn-danger"  type="reset"  id="btnUpdate" name="btnUpdate">Cancel</button> -->
-                                            </div>
-                                      </div>
-                                </form>
-                            </div>
-                        </div>
-                </div>
-            </div>
+        </div>
       </div>
-</div>
+
+      <!--Events Collapse Table-->
+      <div class="tab-pane fade" id="joined_events">
+        <div class="card mb-4">
+          <div class="card-header"><i class="fa fa-calendar mr-1"></i> Joined Events</div>
+          <div class="card-body">
+            <div class="table-responsive">
+              <table class="table" >
+                <thead>
+                  <tr>
+                    <th>Title</th>
+                    <th>Description</th>
+                    <th>Event Type</th>
+                    <th>Street</th>
+                    <th>City</th>
+                  </tr>
+                </thead>
+                <tbody>
+                {% for joined_event in joined_events %}
+                  <tr>
+                    <td>{{joined_event.title}}</td>
+                    <td>{{joined_event.description}}</td>
+                    <td>{{joined_event.event_type}}</td>
+                    <td>{{joined_event.street}}</td>
+                    <td>{{joined_event.city}}</td>
+                  </tr>
+                {% endfor %}
+                </tbody>
+              </table>
+            </div>
+          </div>
+        </div>
+      </div>
+      
+      <!--Profile Collapse Table-->
+      <div class="tab-pane fade" id="profile">
+        <div class="card mb-4" >
+          <div class="card-header"><i class="fa fa-user mr-1"></i> Profile</div>
+          <div class="card-body" >
+            <div class="table-responsive">
+              <form action="{% url 'app:user-dashboard' %}" method="POST" id="userProfileForm" enctype="multipart/form-data">
+              {% csrf_token %}
+
+                <div class="form-group"> 
+                  <div class="col-xs-6">
+                    <label for="first_name"><h4>First name</h4></label>
+                    <input type="text" class="form-control" name="first_name" id="first_name" placeholder="first name" value="{{user.first_name}}" readonly>
+                  </div>
+                </div>
+
+                <div class="form-group">
+                  <div class="col-xs-6">
+                    <label for="last_name"><h4>Last name</h4></label>
+                    <input type="text" class="form-control" name="last_name" id="last_name" placeholder="last name" value="{{user.last_name}}" readonly>
+                  </div>
+                </div>
+
+                <div class="form-group">
+                  <div class="col-xs-6">
+                    <label for="gender"><h4>Gender</h4></label>
+                    <select class="form-control" id="gender" name="gender" value="{{regular_user.gender}}" readonly>
+                      {% if regular_user.gender == 'Male'%}
+                        <option selected>Male</option>
+                        <option>Female</option>
+                      {% endif %}
+                      {% if regular_user.gender == 'Female'%}
+                        <option>Male</option>
+                        <option selected>Female</option>
+                      {% endif %}
+                    </select>
+                  </div>
+                </div>
+
+                <div class="form-group">
+                  <div class="col-xs-6">
+                    <label for="username"><h4>Username</h4></label>
+                    <input type="text" class="form-control" name="username" id="username" value="{{user.username}}" readonly>
+                  </div>
+                </div>
+
+                <div class="form-group">
+                  <div class="col-xs-6">
+                    <label for="email"><h4>Email</h4></label>
+                    <input type="email" class="form-control" name="email" id="email" value="{{user.email}}" readonly>
+                  </div>
+                </div>
+
+                <div class="form-group">
+                  <div class="col-xs-6">
+                    <label for="password"><h4>Password</h4></label>
+                    <input type="password" class="form-control" name="password" id="password" value="{{user.password}}" hidden>
+                  </div>
+                </div>
+  
+                <input type="text" class="form-control" name="user_id" id="user_id" placeholder="first name" value="{{user}}" hidden>
+  
+                <div class="form-group">
+                  <div class="col-xs-12">
+                    <br>
+                    <button class="btn btn-success" type="submit" id="btnApplyOrganizer" name="btnApplyOrganizer">Apply as Organizer</button>
+                    <button class="btn btn-warning" type="submit" id="btnApplyAdmin" name="btnApplyAdmin">Apply as Administrator</button>
+                    <!-- <button class="btn btn-primary" type="submit" id="btnUpdateUser" name="btnUpdateUser">Update</button> -->
+                  </div>
+                </div>
+              </form>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
 </body>
 {% endblock content %}
 </html>

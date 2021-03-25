@@ -1,9 +1,7 @@
-# Date Started: March 20, 2021
-# Author/s: Wylen Joan Lee
-
 # References:
 #   https://docs.djangoproject.com/en/3.1/ref/models/fields/
 #   https://docs.djangoproject.com/en/3.1/topics/db/queries/#backwards-related-objects
+#   https://docs.djangoproject.com/en/3.1/topics/db/examples/many_to_many/
 
 from django.db import models
 from django.contrib.auth.models import User
@@ -39,9 +37,6 @@ class Event(models.Model):
     title = models.CharField(max_length = 128, default = "", blank = True, null = True)
     description = models.CharField(max_length = 255, default = "", blank = True, null = True)
     event_type  = models.CharField(max_length = 128, default = "", blank = True, null = True)
-    # start_datetime = models.DateTimeField(default = timezone.now)
-    # end_datetime = models.DateTimeField(default = timezone.now)
-    is_approved = models.BooleanField(default=False)
     upvotes_count = models.IntegerField(default = 0)
     street = models.CharField(max_length = 128, default = "", blank = True, null = True)
     city = models.CharField(max_length = 128, default = "", blank = True, null = True)
@@ -49,6 +44,10 @@ class Event(models.Model):
 
     organizer_id = models.ForeignKey(OrganizerUser, on_delete=models.CASCADE, related_name='organizer', blank = True, null = True)
     is_deleted = models.BooleanField(default=False)
+    status = models.CharField(max_length = 128, default = "pending", blank = True, null = True)
+    # possible values: pending, approved, declined
+
+    participants = models.ManyToManyField(RegularUser)
 
     class Meta:
         db_table = "Event"
@@ -65,9 +64,11 @@ class Request(models.Model):
     
     # for join_event
     # for create_event
-    event_id = models.ForeignKey(Event, on_delete=models.CASCADE, related_name='events', blank=True, null=True)
+    event_id = models.ForeignKey(Event, on_delete=models.CASCADE, related_name='event', blank=True, null=True)
 
-    is_approved = models.BooleanField(default=False)
+    status = models.CharField(max_length = 128, default = "pending", blank = True, null = True)
+    # possible values: pending, approved, declined
+
     created_at = models.DateTimeField(default = timezone.now)
     updated_at = models.DateTimeField(auto_now=True)
 

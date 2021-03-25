@@ -44,8 +44,11 @@
                               <td>{{ upgrade_request.user_id.user_id.email }}</td>
                               <td>{{ upgrade_request.user_type }}</td>
                               <td>
-                                <button type="submit" class="btn btn-success" id="btnAcceptUpgrade" name="btnAcceptUpgrade"> <i class="fa fa-check"></i> Accept</button>
-                                <button type="submit" class="btn btn-danger" id="btnDeclineUpgrade" id="btnDeclineUpgrade"><i class="fa fa-ban"></i> Decline</button>
+                                <form action="{% url 'app:admin-dashboard' %}" method="post">
+                                  {% csrf_token %} 
+                                  <input name="upgrade_request_id" id="upgrade_request_id"  value="{{upgrade_request.id}}" hidden>
+                                  <button type="submit" class="btn btn-success" id="btnAcceptUpgrade" name="btnAcceptUpgrade"> <i class="fa fa-check"></i> Accept</button>
+                                </form>
                               </td>
                             </tr>
                             {% endfor %}
@@ -79,9 +82,12 @@
                                 <td>{{ event_request.event_id.description }}</td>
                                 <td></td>
                                 <td>
-                                  <button type="submit" class="btn btn-success" id="btnAcceptCreateEvent" name="btnAcceptCreateEvent"> <i class="fa fa-check"></i> Accept</button>
-                                  <button type="button" class="btn btn-danger" id="btnDeclineCreateEvent" name="btnDeclineCreateEvent"><i class="fa fa-ban"></i> Decline</button>
-                                </td>
+                                  <form action="{% url 'app:admin-dashboard' %}" method="post">
+                                    {% csrf_token %} 
+                                    <input name="event_request_id" id="event_request_id"  value="{{event_request.id}}" hidden>
+                                    <button type="submit" class="btn btn-success" id="btnAcceptCreateEvent" name="btnAcceptCreateEvent"> <i class="fa fa-check"></i> Accept</button>
+                                  </form>
+                                 </td>
                               </tr>
                               {% endfor %}
                             </tbody>
@@ -109,15 +115,19 @@
                               </tr>
                             </thead>
                             <tbody>
-                              {% for user in users %}
+                              {% for regular_user in users %}
                               <tr>
-                                <td>{{ user.user_id.first_name }}</td>
-                                <td>{{ user.user_id.last_name }}</td>
-                                <td>{{ user.user_id.email }}</td>
-                                <td>{{ user.user_id.username }}</td>
-                                <td>{{ user.gender }}</td>
+                                <td>{{ regular_user.user_id.first_name }}</td>
+                                <td>{{ regular_user.user_id.last_name }}</td>
+                                <td>{{ regular_user.user_id.email }}</td>
+                                <td>{{ regular_user.user_id.username }}</td>
+                                <td>{{ regular_user.gender }}</td>
                                 <td>
-                                  <button type="submit" class="btn btn-danger"> <i class="fa fa-trash"></i> Remove</button>
+                                  <form action="{% url 'app:admin-dashboard' %}" method="post">
+                                    {% csrf_token %} 
+                                    <input name="list_user_id" id="list_user_id"  value="{{regular_user.id}}" hidden>
+                                    <button type="submit" class="btn btn-danger" name="btnRemoveUser" id="btnRemoveUser"> <i class="fa fa-trash"></i> Remove</button>
+                                  </form>
                               </tr>
                               {% endfor %}
                             </tbody>
@@ -139,8 +149,6 @@
                               <th>Title</th>
                               <th>Description</th>
                               <th>Event Type</th>
-                              <!-- <th>Start</th>
-                              <th>End</th> -->
                               <th>Street</th>
                               <th>City</th>
                               <th></th>
@@ -152,16 +160,14 @@
                               <td>{{event.title}}</td>
                               <td>{{event.description}}</td>
                               <td>{{event.event_type}}</td>
-                              <!-- <td>{{event.start_datetime}}</td>
-                              <td>{{event.end_datetime}}</td> -->
                               <td>{{event.street}}</td>
                               <td>{{event.city}}</td>
                               <td>
-                                <!-- <form action="{% url 'app:user-dashboard' %}" method="post">
-                                  {% csrf_token %} -->
-                                  <button type="submit" class="btn btn-danger"> <i class="fa fa-trash"></i> Remove</button>
-                                <!-- </form> -->
-                              </td>
+                                <form action="{% url 'app:admin-dashboard' %}" method="post">
+                                  {% csrf_token %} 
+                                  <input name="list_event_id" id="list_event_id"  value="{{event.id}}" hidden>
+                                  <button type="submit" class="btn btn-danger" name="btnRemoveEvent" id="btnRemoveEvent"> <i class="fa fa-trash"></i> Remove</button>
+                                </form>
                             </tr>
                             {% endfor %}
                           </tbody>
