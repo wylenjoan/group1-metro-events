@@ -8,6 +8,9 @@ from django.shortcuts import render, redirect
 from django.views.generic import View
 from .forms import UserRegistrationForm
 from django.http import HttpResponse
+from .forms import EventsForm
+from .forms import *
+from .models import *
 from django.contrib.auth.models import Group, User, auth
 from .models import RegularUser, OrganizerUser, AdministratorUser, Event, Request
 
@@ -123,17 +126,68 @@ class UserDashboardView(View):
 class OrganizerDashboardView(View):
     def get(self, request):
         if not request.user.is_authenticated:
-            return render(request, 'login.html')
+            return render(request, 'login.html')    
         user = request.user
+        events = Event.objects.all()
         regular_user = RegularUser.objects.get(user_id=user)
         organizer_user = OrganizerUser.objects.get(regular_user_id=regular_user)
 
         context = {
             'regular_user': regular_user,
             'organizer_user': organizer_user,
+            'events': events,
         }
 
         return render(request, 'organizer.html', context)
+
+    def post(self, request):
+        form = EventsForm(request.POST)
+        if form.is_valid():
+            title = request.POST.get('title')
+            description = request.POST.get('description')
+            eventType = request.POST.get('eventType')
+            approved = request.POST.get('is_approved')
+            upVotes = request.POST.get('upvotes_count')
+            street = request.POST.get('street')
+            city = request.POST.get('city')
+            province = request.POST.get('province')
+        
+            form = Event(title = title, description = description, event_type = eventType, is_approved = 0,
+                        upvotes_count = upVotes, street = street, city = city, province = province)
+            form.save()
+
+            return HttpResponse('Event added!')
+
+        else:
+            print(form.errors)
+            return HttpResponse('Error!')
+
+    def post(self, request):
+        if request.method == 'POST':
+            if 'btnUpdate' in request.POST:
+                print('update profile clicked')
+                sid = request.POST.get('id')
+                title = request.POST.get('title')
+                description = request.POST.get('description')
+                eventType = request.POST.get('eventType')
+                approved = request.POST.get('is_approved')
+                upVotes = request.POST.get('upvotes_count')
+                street = request.POST.get('street')
+                city = request.POST.get('city')
+                province = request.POST.get('province')
+
+                update_event = Event.objects.filter(id = sid).update(title = title, description = description, event_type = eventType, 
+                                    is_approved = 0, upvotes_count = upVotes)            
+                print(update_event)
+                print('event updated')
+            elif 'btnDelete' in request.POST:
+                print('delete button clicked')
+                sid = request.POST.get("iid")
+                print(sid)
+                eventt = Event.objects.filter(id = sid).delete()
+                print(is_deleted = 1)    
+
+        return redirect('app:organizer-dashboard')
 
 class AdminDashboardView(View):
     def get(self, request):
