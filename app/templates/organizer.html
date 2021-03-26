@@ -248,6 +248,7 @@
 
               <tbody>
                 {% for join_request in join_requests %}
+                {% if join_request.event_id.organizer_id == organizer_user %}
                 <form class="form" action="{% url 'app:organizer-dashboard' %}" method="post">
                   {% csrf_token %}
                   <tr>
@@ -260,6 +261,7 @@
                     </td>
                   </tr>
                 </form>
+                {% endif %}
                 {% endfor %}
               </tbody>
             </table>
