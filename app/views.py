@@ -267,6 +267,10 @@ class AdminDashboardView(View):
                 event_request.status = 'declined'
                 event_request.save()
 
+                event = event_request.event_id
+                event.status = 'declined'
+                event.save()
+
                 return redirect('app:admin-dashboard')
 
             # Remove User
