@@ -110,7 +110,7 @@ class OrganizerDashboardView(View):
         regular_user = RegularUser.objects.get(user_id=user)
         organizer_user = OrganizerUser.objects.get(regular_user_id=regular_user)
 
-        events = Event.objects.filter(is_deleted=False)
+        events = Event.objects.filter(is_deleted=False, organizer_id = organizer_user)
         join_requests = Request.objects.filter(status='pending', request_type='join_event')
 
         context = {
